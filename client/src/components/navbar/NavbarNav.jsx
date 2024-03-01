@@ -20,7 +20,7 @@ export default function NavbarNav() {
           <Nav.Link href="/view-item" className='fw-bold'>View Item</Nav.Link>
           <Nav.Link href="/help-advice" className='fw-bold'>Help & Advice</Nav.Link>
           <div className="auth-buttons d-flex gap-2">
-          <Button style={{backgroundColor: "#e4978b", border: "2px solid #e4978b"}}>Log In</Button>
+          <Button style={{backgroundColor: "#dc796a", border: "2px solid #e4978b"}}>Log In</Button>
           <Button className='px-3' style={{backgroundColor: "#365d6d", border: "1px solid #e4978b"}}>Sign Up</Button>
           </div>
      
