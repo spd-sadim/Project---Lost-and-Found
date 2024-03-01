@@ -1,4 +1,8 @@
 :root {
-    --primary-color: #365d6d;
+    /* --primary-color: #365d6d; */
+    --primary-color: #376679;
     --sec-color: #e4978b;
+}
+.primary-color {
+    color: var(--primary-color);
 }
