@@ -10,12 +10,16 @@ export default function Hero() {
           <h1>Bhetayoo Lost & found solutions</h1>
           <p>
             "Our website is dedicated to simplifying the process of reuniting
-            lost belongings with their owners.
+            lost belongings with their owners."
           </p>
-        <div className="search w-100 d-flex justify-content-center px-5 pt-3 position-relative">
-          <input type="text" name="search" className="w-50 py-3 px-2 rounded" />
-          <button>Check</button>
-        </div>
+          <div className="search w-100 d-flex justify-content-center px-5 pt-3 position-relative">
+            <input
+              type="text"
+              name="search"
+              className="w-50 py-3 px-2 rounded"
+            />
+            <button>Check</button>
+          </div>
         </div>
       </Container>
     </section>
