@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router";
 import NavbarNav from "./components/navbar/NavbarNav";
 import Home from "./pages/Home";
+import Login from "./pages/login/Login";
+import SignUp from "./pages/signup/SignUp";
 
 export default function App() {
   return (
@@ -8,6 +10,8 @@ export default function App() {
       <NavbarNav />
       <Routes>
         <Route index path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/sign-up" element={<SignUp />} />
       </Routes>
     </>
   );
