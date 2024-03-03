@@ -1,8 +1,14 @@
 :root {
-    /* --primary-color: #365d6d; */
-    --primary-color: #376679;
-    --sec-color: #e4978b;
+  /* --primary-color: #365d6d; */
+  --primary-color: #376679;
+  --sec-color: #e4978b;
 }
 .primary-color {
-    color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.inputField {
+  background-color: #eeeeee;
+  color: #6d6d6d;
+  border: 1px soild #ccd7e6;
 }
