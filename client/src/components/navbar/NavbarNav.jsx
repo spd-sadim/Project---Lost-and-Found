@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export default function NavbarNav() {
   return (
-    <Navbar expand="lg" sticky="top" className="bg-body-tertiary">
+    <Navbar expand="lg" fixed="top" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="#home">Bhetayoo</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -41,7 +41,7 @@ export default function NavbarNav() {
               </Link>
               <Link to="/sign-up">
                 <Button
-                  className="px-3"
+                  className="px-4"
                   style={{
                     backgroundColor: "#365d6d",
                     border: "1px solid #e4978b",
