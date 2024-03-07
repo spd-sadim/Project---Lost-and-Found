@@ -31,7 +31,7 @@ export default function AnnouncementCard({ item }) {
           <span className="d-block">{item.location}</span>
           {item.date}
         </Card.Text>
-        <button type="button p-2">Details</button>
+        <button type="button" className="myBtn-primary px-3 py-1 rounded text-white">Details</button>
       </Card.Body>
     </Card>
   );
