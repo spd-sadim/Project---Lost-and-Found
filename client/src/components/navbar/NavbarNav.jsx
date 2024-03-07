@@ -9,7 +9,7 @@ export default function NavbarNav() {
   return (
     <Navbar expand="lg" fixed="top" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">Bhetayoo</Navbar.Brand>
+        <Navbar.Brand href="/">Bhetayoo</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto py-2">
@@ -28,7 +28,8 @@ export default function NavbarNav() {
             <Nav.Link href="/help-advice" className="fw-bold">
               Help & Advice
             </Nav.Link>
-            <div className="auth-buttons d-flex gap-2">
+          </Nav>
+            <div className="auth-buttons d-flex gap-2 ">
               <Link to="/login">
                 <Button
                   style={{
@@ -44,14 +45,13 @@ export default function NavbarNav() {
                   className="px-4"
                   style={{
                     backgroundColor: "#365d6d",
-                    border: "1px solid #e4978b",
+                    border: "2px solid #dc796a",
                   }}
                 >
                   Sign Up
                 </Button>
               </Link>
             </div>
-          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
