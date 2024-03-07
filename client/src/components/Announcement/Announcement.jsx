@@ -43,10 +43,10 @@ export default function Announcement() {
   ];
   return (
     <div className="py-2">
+      <div className="title py-5 text-center position-relative">
+        <h3 className="heading font-primary fw-bold">Announcement</h3>
+      </div>
       <Container>
-        <div className="title py-5">
-          <h3>Announcement</h3>
-        </div>
         <Row gap={8}>
           {items.map((item) => (
             <Col lg={3} md={4} key={item.id}>
