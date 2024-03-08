@@ -41,7 +41,7 @@ export default function HelpAdviceForm() {
                   rows="10"
                   className="inputField border-0 p-2"
                 ></textarea>
-                <Button variant="dark" size="lg" type="submit">
+                <Button variant="dark" className="d-flex align-items-center justify-content-center gap-1" size="lg" type="submit">
                   <Icon icon="line-md:telegram" />
                   Send Message
                 </Button>
