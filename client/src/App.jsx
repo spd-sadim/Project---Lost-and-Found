@@ -5,6 +5,7 @@ import Login from "./pages/login/Login";
 import SignUp from "./pages/signup/SignUp";
 import HelpAdvice from "./pages/help-advice/HelpAdvice";
 import ReportItem from "./pages/report-item/ReportItem";
+import UserDashboard from "./pages/dashboard/UserDashboard";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/help-advice" element={<HelpAdvice />} />
         <Route path="/report-item" element={<ReportItem />} />
+        <Route path="/dashboard" element={<UserDashboard />} />
       </Routes>
     </>
   );
