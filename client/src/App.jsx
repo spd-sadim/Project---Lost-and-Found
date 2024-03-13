@@ -6,18 +6,21 @@ import SignUp from "./pages/signup/SignUp";
 import HelpAdvice from "./pages/help-advice/HelpAdvice";
 import ReportItem from "./pages/report-item/ReportItem";
 import UserDashboard from "./pages/dashboard/UserDashboard";
+import ViewItem from "./components/ViewItem";
 
 export default function App() {
   return (
     <>
-      <NavbarNav />
+      {/* <NavbarNav /> */}
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/help-advice" element={<HelpAdvice />} />
         <Route path="/report-item" element={<ReportItem />} />
-        <Route path="/dashboard" element={<UserDashboard />} />
+        <Route path="/dashboard" element={<UserDashboard />}>
+          <Route path="/dashboard/view-item" element={<ViewItem />} />
+        </Route>
       </Routes>
     </>
   );
