@@ -1,14 +1,14 @@
 {
-  "name": "lost-found",
+  "name": "api",
   "version": "1.0.0",
   "description": "",
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Sadim Mali",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
