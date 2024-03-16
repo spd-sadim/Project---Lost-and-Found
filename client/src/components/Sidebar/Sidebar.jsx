@@ -79,18 +79,17 @@ export default function Sidebar() {
   ];
   return (
     <aside
-      className="sidebar-container h-100"
-      style={{ width: "250px", backgroundColor: "red" }}
+      className="sidebar-container vh-100 position-sticky border"
     >
       <div className="sidebar-links px-3">
-        <ul className="d-flex flex-column list-unstyled">
+        <ul className="d-flex flex-column gap-1 list-unstyled">
           <Link to="/" className="text-decoration-none">
-            <li className="text-white">View site</li>
+            <li>View site</li>
           </Link>
           {items.map((item) => (
             <li
               key={item.id}
-              className={activeDropdown === item.id ? "text-" : "text-white"}
+              className={activeDropdown === item.id ? "text-dark" : "text-black"}
               onClick={() => {
                 handleDropDown(item.id);
               }}
@@ -104,7 +103,7 @@ export default function Sidebar() {
                     className="text-decoration-none"
                     key={subLink.id}
                   >
-                    <li className="text-white">{subLink.subName}</li>
+                    <li>{subLink.subName}</li>
                   </Link>
                 ))}
               </ul>
