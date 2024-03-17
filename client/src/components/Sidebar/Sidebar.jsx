@@ -78,9 +78,7 @@ export default function Sidebar() {
     },
   ];
   return (
-    <aside
-      className="sidebar-container vh-100 position-sticky border"
-    >
+    <aside className="sidebar-container vh-100 position-sticky border">
       <div className="sidebar-links px-3">
         <ul className="d-flex flex-column gap-1 list-unstyled">
           <Link to="/" className="text-decoration-none">
@@ -89,7 +87,9 @@ export default function Sidebar() {
           {items.map((item) => (
             <li
               key={item.id}
-              className={activeDropdown === item.id ? "text-dark" : "text-black"}
+              className={
+                activeDropdown === item.id ? "text-dark" : "text-black"
+              }
               onClick={() => {
                 handleDropDown(item.id);
               }}
