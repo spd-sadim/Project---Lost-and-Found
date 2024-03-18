@@ -47,7 +47,7 @@ export default function Announcement() {
         <h3 className="heading font-primary fw-bold">Announcement</h3>
       </div>
       <Container>
-        <Row gap={8}>
+        <Row gap={8} className="gy-3" >
           {items.map((item) => (
             <Col lg={3} md={4} key={item.id}>
               <AnnouncementCard item={item} />
