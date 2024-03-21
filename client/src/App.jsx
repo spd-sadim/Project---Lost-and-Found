@@ -8,6 +8,7 @@ import ReportItem from "./pages/report-item/ReportItem";
 import UserDashboard from "./pages/dashboard/UserDashboard";
 import ViewItem from "./components/ViewItem";
 import DetailedView from "./components/DetailedView";
+import AddItem from "./components/AddItem";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/dashboard" element={<UserDashboard />}>
           <Route path="/dashboard/view-item" element={<ViewItem />} />
           <Route path="/dashboard/view-item/:id" element={<DetailedView />} />
+          <Route path="/dashboard/add-item" element={<AddItem />} />
         </Route>
       </Routes>
     </>

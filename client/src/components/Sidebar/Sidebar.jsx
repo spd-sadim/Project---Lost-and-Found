@@ -24,7 +24,7 @@ export default function Sidebar() {
         {
           id: 2,
           subName: "Add Found Item",
-          subRoute: "/add-found-item",
+          subRoute: "/add-item",
         },
       ],
     },
@@ -40,7 +40,7 @@ export default function Sidebar() {
         {
           id: 2,
           subName: "Add Lost Item",
-          subRoute: "/add-lost-item",
+          subRoute: "/add-item",
         },
       ],
     },
@@ -88,7 +88,7 @@ export default function Sidebar() {
             <li
               key={item.id}
               className={
-                activeDropdown === item.id ? "text-dark" : "text-black"
+                activeDropdown === item.id ? "text-danger" : "text-black"
               }
               onClick={() => {
                 handleDropDown(item.id);

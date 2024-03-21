@@ -18,7 +18,7 @@ export default function ViewItem() {
               <th>Category</th>
               <th>Date lost</th>
               <th>Location lost</th>
-              <th>Recovered</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -30,7 +30,7 @@ export default function ViewItem() {
               <td>2024-02-22</td>
               <td>Barcelona, Spain</td>
               <td>
-                <span className="text-danger">No</span>
+                <button className="btn btn-secondary">Reported</button>
               </td>
               <td className="d-flex gap-2">
                 <Icon icon="lets-icons:view-alt" />
