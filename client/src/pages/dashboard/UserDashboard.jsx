@@ -1,20 +1,24 @@
+import { Icon } from "@iconify-icon/react";
+import { useState } from "react";
 import { Outlet } from "react-router";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { Col, Row } from "react-bootstrap";
 
 export default function UserDashboard() {
+  const [isCollapse, setIsCollapse] = useState(false);
   return (
-    <div className="main container-fluid">
-      <Row className="flex-nowrap">
-        <Col md={2} sm={3} xs={2}>
-          <Sidebar />
-        </Col>
-        <Col md={9} xs={9}>
-          <main className="content-container mt-5">
-            <Outlet />
-          </main>
-        </Col>
-      </Row>
+    <div className="wrapper d-flex">
+      <Sidebar isCollapse={isCollapse} />
+      <main className="container-fluid content-container mt-2">
+        <Icon
+          icon="jam:menu"
+          style={{ fontSize: "3.4rem" }}
+          onClick={() => {
+            setIsCollapse(!isCollapse);
+          }}
+        />
+
+        <Outlet />
+      </main>
     </div>
   );
 }
