@@ -1,0 +1,14 @@
+.sidebar-container {
+    background-color: #293042;
+    color: white;
+    min-width: 262px;
+    max-width: 262px;
+    transition: all .34s ease-in-out;
+}
+
+.text-color {
+    color: rgba(233,236,239,.5)
+}
+.collapsed {
+    margin-left : -262px;
+}
