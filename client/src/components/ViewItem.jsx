@@ -1,11 +1,9 @@
-import { Container } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { Icon } from "@iconify/react";
 
 export default function ViewItem() {
   return (
     <div>
-      <Container>
         <div className=" d-flex justify-content-between w-100 mb-3">
           <h4>View Lost Items</h4>
           <button className="btn btn-dark">+ New Item</button>
@@ -40,7 +38,6 @@ export default function ViewItem() {
             </tr>
           </tbody>
         </Table>
-      </Container>
     </div>
   );
 }
