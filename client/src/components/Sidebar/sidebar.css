@@ -12,3 +12,7 @@
 .collapsed {
     margin-left : -262px;
 }
+
+.sidebar-links:hover {
+    color: rgb(221, 221, 221)
+}

@@ -5,6 +5,7 @@ import "./sidebar.css";
 
 export default function Sidebar({ isCollapse }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  
 
   //fn that set activeDropdown value as id
   const handleDropDown = (id) => {
@@ -95,13 +96,13 @@ export default function Sidebar({ isCollapse }) {
     >
       <div className="sidebar-links px-3">
         <ul className="d-flex flex-column gap-1 list-unstyled">
-          <Link to="/" className="text-decoration-none text-color px-2 py-1">
+          <Link to="/" className="text-decoration-none text-color px-2 py-1 sidebar-links">
             <li>View site</li>
           </Link>
           {items.map((item) => (
             <li
               key={item.id}
-              className={`  px-2 py-1 ${
+              className={` sidebar-links px-2 py-1 pointer ${
                 activeDropdown === item.id ? "text-white" : "text-color"
               } `}
               onClick={() => {
@@ -131,7 +132,7 @@ export default function Sidebar({ isCollapse }) {
                 {item.subLinks.map((subLink) => (
                   <Link
                     to={`/dashboard${subLink.subRoute}`}
-                    className="text-decoration-none text-color"
+                    className="text-decoration-none text-color sidebar-links"
                     key={subLink.id}
                     onClick={handleSubLinkClick}
                   >
