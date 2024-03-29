@@ -1,13 +1,15 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Icon } from "@iconify/react";
+import image from "../../assets/hero/lost.png"
 
 export default function HelpAdviceForm() {
   return (
-    <div>
       <Container>
         <Row>
-          <Col lg={6}></Col>
-          <Col lg={6}>
+          <Col lg={6} md={4} className="align-self-center d-none d-md-block">
+              <img src={image} alt="" className="w-100 h-100" />
+          </Col>
+          <Col lg={6} md={6}>
             <div className="contact-form p-md-5">
               <form className="d-flex flex-column gap-2 py-md-5">
                 <label htmlFor="name">
@@ -50,6 +52,5 @@ export default function HelpAdviceForm() {
           </Col>
         </Row>
       </Container>
-    </div>
   );
 }
