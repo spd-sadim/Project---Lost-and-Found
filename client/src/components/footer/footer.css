@@ -1,0 +1,43 @@
+.footer {
+  background-color: #101335;
+}
+
+/* footer top */
+.footer-top {
+  padding: 4rem 0;
+}
+.footer-links {
+  color: #7a7c93;
+  font-size: 1.2rem;
+  transition: all 0.3s ease-in;
+  font-weight: 500;
+}
+
+.footer-links:hover {
+  color: #02c5bd;
+  padding-left: 8px;
+}
+
+.footer-newsletter {
+  color: #7a7c93;
+}
+
+.newsletter-form {
+  text-align: center;
+  border-radius: 20px;
+  background-color: #14183f;
+  padding: 36px 36px 43px 41px;
+}
+
+.form input {
+  border: none;
+  height: 60px;
+  color: #6a6d90;
+  padding: 18px 22px;
+  background-color: #1c2049;
+}
+/* footer bottom */
+.footer-bottom {
+    color: #7a7c93;
+  background-color: #191D44;
+}
