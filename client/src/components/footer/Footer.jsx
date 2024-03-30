@@ -81,7 +81,7 @@ export default function Footer() {
             {/* footer links */}
             {footerIinks.map((footerlink) => (
               <Col key={footerlink.id} lg={footerlink.id == 1 ? 2 : 3}>
-                <h3 className="text-white font-bold py-3">{footerlink.name}</h3>
+                <h5 className="text-white font-bold py-3">{footerlink.name}</h5>
                 <div className="d-flex flex-column gap-3">
                   {footerlink.links.map((link) => (
                     <Link
@@ -101,9 +101,9 @@ export default function Footer() {
                 <div className="newsletter-form">
                   <div className="newsletter-content">
                     <div className="title">
-                      <h3 className="text-white">
+                      <h5 className="text-white">
                         To get the latest sign up for the PList newsletter
-                      </h3>
+                      </h5>
                     </div>
                     <div className="form mt-4 position-relative">
                       <input

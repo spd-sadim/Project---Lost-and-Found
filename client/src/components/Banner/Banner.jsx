@@ -10,8 +10,8 @@ export default function Banner() {
         <Row>
           <Col lg={6}>
             <div className="banner-content text-white">
-              <h1 className="font-bold ">World Number #1 Items Classidied</h1>
-              <p className="h5">
+              <h2 className="fw-bold">World Number #1 Items Classidied</h2>
+              <p className="h6">
                 See more relevant listings, find what you’re looking for <br />
                 quicker and more!
               </p>
@@ -19,11 +19,11 @@ export default function Banner() {
               <div className="button-container pt-3">
                 <Link
                   href="#"
-                  className="text-decoration-none text-white bg-black px-3 py-2 rounded d-inline-flex gap-1 align-items-center"
+                  className="text-decoration-none text-white bg-black px-2 py-1 rounded d-inline-flex gap-1 align-items-center"
                 >
                   <Icon
                     icon="simple-icons:apple"
-                    style={{ fontSize: "2.8rem" }}
+                    style={{ fontSize: "2.5rem" }}
                   />
                   <span
                     className="d-flex flex-column"
@@ -36,11 +36,11 @@ export default function Banner() {
                 </Link>
                 <Link
                   href="#"
-                  className=" mx-3 text-decoration-none text-white bg-black px-3 py-2 rounded d-inline-flex gap-1 align-items-center"
+                  className=" mx-3 text-decoration-none text-white bg-black px-2 py-1 rounded d-inline-flex gap-1 align-items-center"
                 >
                   <Icon
                     icon="simple-icons:googleplay"
-                    style={{ fontSize: "2.8rem" }}
+                    style={{ fontSize: "2.5rem" }}
                   />
                   <span
                     className="d-flex flex-column"
