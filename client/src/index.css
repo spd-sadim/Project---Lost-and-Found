@@ -2,6 +2,13 @@
   /* --primary-color: #365d6d; */
   --primary-color: #376679;
   --secondary-color: #dc796a;
+  --list-white-color: #ffffff;
+  --list-primary-color: #02c5bd;
+  --list-secondary-color: #FF3D41;
+  --list-body-color: #515167;
+  --list-heading-color: #070C3E;
+  --list-button-color1: #FF282C;
+  --list-button-color2: #FF4E51;
 }
 
 * {
@@ -63,4 +70,13 @@
 
 .pointer {
   cursor: pointer;
+}
+
+
+/* banner */
+.banner{
+  background-image: url("./assets/app-banner/app-banner-bg.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
