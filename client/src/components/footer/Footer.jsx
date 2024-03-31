@@ -120,7 +120,6 @@ export default function Footer() {
                         <img
                           src={arrowImg}
                           alt="submit button"
-                          srcset=""
                         />{" "}
                       </button>
                     </div>
@@ -136,7 +135,7 @@ export default function Footer() {
         {" "}
         <p className="mb-0  font-bold">
           {" "}
-          2024 © All right reserved by Lost & Found || Made with Love by Sadim
+          2024 © All right reserved by Lost & Found | Made with Love by Sadim
         </p>
       </div>
     </footer>
