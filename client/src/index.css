@@ -9,6 +9,7 @@
   --list-heading-color: #070C3E;
   --list-button-color1: #FF282C;
   --list-button-color2: #FF4E51;
+  --list-font-secondary: #7a7c93;
 }
 
 * {
@@ -79,4 +80,8 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+}
+
+.font-sec{
+  color: var(--list-font-secondary);
 }
