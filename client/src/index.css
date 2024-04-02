@@ -85,3 +85,6 @@
 .font-sec{
   color: var(--list-font-secondary);
 }
+.bg-sec{
+  background-color: #eef2f6;
+}
