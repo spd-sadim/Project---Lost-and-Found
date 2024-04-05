@@ -1,7 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify-icon/react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import axios from "axios";
 
 export default function Login() {
+  const [credentials, setCredentials] = useState({
+    email: undefined,
+    password: undefined,
+  });
+
+  const navigate = useNavigate();
+
+  const { loading, error, dispatch } = useContext(AuthContext);
+
+  const handleChange = (e) => {
+    setCredentials((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch({ type: "loginStart" });
+      const res = await axios.post("/api/auth/signin", credentials);
+      dispatch({ type: "loginSuccess", payload: res.data });
+      console.log(res.data);
+      navigate("/");
+    } catch(err) {
+      dispatch({ type: "loginFailure", payload: err });
+    }
+  };
+
   return (
     <div
       className="px-4 py-5 mx-auto my-auto"
@@ -29,24 +60,29 @@ export default function Login() {
           name="email"
           placeholder="Email"
           className=" py-3 px-2 rounded border"
+          onChange={handleChange}
         />
         <label>
           Password <b className="text-danger">*</b>{" "}
         </label>
         <input
           type="password"
-          name="pwd"
+          name="password"
           placeholder="New password"
           className="px-2 py-3 rounded border"
+          onChange={handleChange}
         />
         <button
           type="button"
           className="p-3 rounded"
           style={{ backgroundColor: "#376679", color: "white" }}
+          onClick={handleClick}
+          disabled={loading}
         >
-          Log In
+          {loading ? "Loading..." : "Log In"}
         </button>
       </form>
+      {error && <p className="text-danger">{error.message}</p>}
     </div>
   );
 }
