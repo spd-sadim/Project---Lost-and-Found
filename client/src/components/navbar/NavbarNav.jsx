@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function NavbarNav() {
+  const {user} = useContext(AuthContext);
   return (
     <Navbar expand="lg" fixed="top" className="bg-body-tertiary">
       <Container>
@@ -29,6 +31,8 @@ export default function NavbarNav() {
               Help & Advice
             </Nav.Link>
           </Nav>
+          <Link to="/dashboard">
+          {user ? "user" :
             <div className="auth-buttons d-flex gap-2 ">
               <Link to="/login">
                 <Button
@@ -52,6 +56,8 @@ export default function NavbarNav() {
                 </Button>
               </Link>
             </div>
+          }
+          </Link>
         </Navbar.Collapse>
       </Container>
     </Navbar>
