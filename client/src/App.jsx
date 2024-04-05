@@ -10,6 +10,7 @@ import AddItem from "./components/AddItem";
 import SignInUp from "./pages/sign-in-up/SignInUp";
 import Login from "./components/login/Login";
 import SignUp from "./components/signup/SignUp";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 
 export default function App() {
   return (
@@ -21,10 +22,12 @@ export default function App() {
         <Route path="/sign-up" element={<SignInUp><SignUp /> </SignInUp>} />
         <Route path="/help-advice" element={<HelpAdvice />} />
         <Route path="/report-item" element={<ReportItem />} />
+        <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<UserDashboard />}>
           <Route path="/dashboard/view-item" element={<ViewItem />} />
           <Route path="/dashboard/view-item/:id" element={<DetailedView />} />
           <Route path="/dashboard/add-item" element={<AddItem />} />
+        </Route>
         </Route>
       </Routes>
     </>
