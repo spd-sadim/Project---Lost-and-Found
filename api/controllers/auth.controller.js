@@ -52,7 +52,7 @@ export const signIn = async (req, res, next) => {
 
     const token = jwt.sign({ id: existingUser[0] }, process.env.JWT_SECRET);
 
-    const { user_password, role, ...rest } = existingUser[0];
+    const { user_password, ...rest } = existingUser[0];
     const expiryDate = new Date(Date.now() + 3600000);
 
     res
