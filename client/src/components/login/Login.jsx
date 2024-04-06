@@ -29,7 +29,8 @@ export default function Login() {
       console.log(res.data);
       navigate("/");
     } catch(err) {
-      dispatch({ type: "loginFailure", payload: err });
+      dispatch({ type: "loginFailure", payload: err.response.data });
+      console.log(err.response.data);
     }
   };
 

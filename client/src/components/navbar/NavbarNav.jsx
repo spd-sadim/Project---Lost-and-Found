@@ -31,8 +31,8 @@ export default function NavbarNav() {
               Help & Advice
             </Nav.Link>
           </Nav>
-          <Link to="/dashboard">
-          {user ? "user" :
+         
+          {user ? <Link to="/dashboard"> user </Link> :
             <div className="auth-buttons d-flex gap-2 ">
               <Link to="/login">
                 <Button
@@ -57,7 +57,6 @@ export default function NavbarNav() {
               </Link>
             </div>
           }
-          </Link>
         </Navbar.Collapse>
       </Container>
     </Navbar>

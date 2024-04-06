@@ -26,10 +26,8 @@ export default function SignUp() {
       dispatch({ type: "loginStart" });
       const res = await axios.post("/api/auth/signup", credentials);
       dispatch({ type: "signUpSuccess" });
-      console.log(res.data);
       navigate("/login");
     } catch (err) {
-      console.log(err);
       dispatch({ type: "loginFailure", payload: err.response.data });
     }
   };
