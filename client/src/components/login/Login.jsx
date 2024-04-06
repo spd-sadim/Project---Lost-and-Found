@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify-icon/react";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -9,8 +9,9 @@ export default function Login() {
     email: undefined,
     password: undefined,
   });
-
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const { loading, error, dispatch } = useContext(AuthContext);
 
@@ -27,8 +28,8 @@ export default function Login() {
       const res = await axios.post("/api/auth/signin", credentials);
       dispatch({ type: "loginSuccess", payload: res.data });
       console.log(res.data);
-      navigate("/");
-    } catch(err) {
+      navigate(from, { replace: true });
+    } catch (err) {
       dispatch({ type: "loginFailure", payload: err.response.data });
       console.log(err.response.data);
     }
@@ -39,7 +40,7 @@ export default function Login() {
       className="px-4 py-5 mx-auto my-auto"
       style={{ width: "32rem", background: "white" }}
     >
-      <div className="mb-4 text-center d-flex align-items-center justify-content-between">
+      <div className="mb-4 text-md-center d-flex flex-column flex-md-row align-items-md-center justify-content-between">
         <h3 className="fw-bold d-flex align-items-center gap-2">
           <Icon icon="codicon:account" /> <span>Log-in</span>
         </h3>
