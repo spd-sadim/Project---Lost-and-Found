@@ -32,7 +32,7 @@ export default function NavbarNav() {
             </Nav.Link>
           </Nav>
          
-          {user ? <Link to="/dashboard"> user </Link> :
+          {user ? <Link to={`/${user.role}`}> {user.role} </Link> :
             <div className="auth-buttons d-flex gap-2 ">
               <Link to="/login">
                 <Button
