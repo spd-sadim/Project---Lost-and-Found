@@ -1,11 +1,12 @@
 import { Icon } from "@iconify-icon/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "./sidebar.css";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Sidebar({ isCollapse }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
-  
+  const { user } = useContext(AuthContext);
 
   //fn that set activeDropdown value as id
   const handleDropDown = (id) => {
@@ -17,7 +18,8 @@ export default function Sidebar({ isCollapse }) {
   const handleSubLinkClick = (e) => {
     e.stopPropagation();
   };
-  const items = [
+
+  const adminLinks = [
     {
       id: 2,
       name: "Manage Found Item",
@@ -87,7 +89,49 @@ export default function Sidebar({ isCollapse }) {
         },
       ],
     },
+    {
+      id: 6,
+      name: "Dummy",
+      icon: <Icon icon="clarity:notification-solid" />,
+      subLinks: [
+        {
+          id: 1,
+          subName: "Lost Notification",
+          subRoute: "/lost/notification",
+        },
+        {
+          id: 2,
+          subName: "Found Notification",
+          subRoute: "/found/notification",
+        },
+      ],
+    },
+    {
+      id: 7,
+      name: "Dummy2",
+      icon: <Icon icon="clarity:notification-solid" />,
+      subLinks: [
+        {
+          id: 1,
+          subName: "Lost Notification",
+          subRoute: "/lost/notification",
+        },
+        {
+          id: 2,
+          subName: "Found Notification",
+          subRoute: "/found/notification",
+        },
+      ],
+    },
   ];
+
+  // const userLinks = adminLinks.filter((item) => item.id < 6);
+
+  const items =
+    user.role === "admin"
+      ? adminLinks
+      : adminLinks.filter((link) => link.id < 6);
+
   return (
     <aside
       className={`sidebar-container vh-100 position-sticky ${
@@ -96,7 +140,10 @@ export default function Sidebar({ isCollapse }) {
     >
       <div className="sidebar-links px-3">
         <ul className="d-flex flex-column gap-1 list-unstyled">
-          <Link to="/" className="text-decoration-none text-color px-2 py-1 sidebar-links">
+          <Link
+            to="/"
+            className="text-decoration-none text-color px-2 py-1 sidebar-links"
+          >
             <li>View site</li>
           </Link>
           {items.map((item) => (
@@ -131,7 +178,7 @@ export default function Sidebar({ isCollapse }) {
               >
                 {item.subLinks.map((subLink) => (
                   <Link
-                    to={`/dashboard${subLink.subRoute}`}
+                    to={`/${user.role}${subLink.subRoute}`}
                     className="text-decoration-none text-color sidebar-links"
                     key={subLink.id}
                     onClick={handleSubLinkClick}
