@@ -15,7 +15,6 @@ export default function HelpAdvice() {
         id="gmap_canvas"
         samesite="Strict"
         src="https://maps.google.com/maps?q=kirtipur&t=&z=10&ie=UTF8&iwloc=&output=embed"
-        frameborder="0"
       ></iframe>  
       <Footer />
     </section>
