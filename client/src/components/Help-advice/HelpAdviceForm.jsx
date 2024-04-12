@@ -15,15 +15,15 @@ export default function HelpAdviceForm() {
   const [error, setError] = useState(undefined);
 
   const handleMessage = (e) => {
-    setMessage((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setInquiry((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmitMessage = async (e) => {
     e.preventDefault();
     try {
-      isLoading(true);
+      setIsLoading(true);
       const res = await axios.post("/api/inquiry/post", inquiry);
-      isLoading(false);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
       setError(err);
@@ -49,6 +49,7 @@ export default function HelpAdviceForm() {
                 className="inputField border-0 p-2"
                 required
                 placeholder='Eg: "Joe Sama'
+                onChange={handleMessage}
               />
               <label htmlFor="email">
                 Email <b>*</b>
@@ -60,6 +61,7 @@ export default function HelpAdviceForm() {
                 className="inputField border-0 p-2"
                 placeholder="youremail@example.com"
                 required
+                onChange={handleMessage}
               />
               <label htmlFor="phoneNumber">
                 Phone number <b>*</b>
@@ -72,6 +74,7 @@ export default function HelpAdviceForm() {
                 maxLength={10}
                 placeholder="Phone Number"
                 required
+                onChange={handleMessage}
               />
               <label htmlFor="message">
                 Tell us about it <b>*</b>
@@ -83,15 +86,24 @@ export default function HelpAdviceForm() {
                 rows="8"
                 placeholder="Message"
                 className="inputField border-0 p-2"
+                onChange={handleMessage}
               ></textarea>
               <Button
                 variant="dark"
                 className="d-flex align-items-center justify-content-center gap-1"
                 size="lg"
                 type="submit"
+                onClick={handleSubmitMessage}
+                disabled={isLoading}
               >
-                <Icon icon="line-md:telegram" />
-                Send Message
+                {isLoading ? (
+                  "Loading....."
+                ) : (
+                  <>
+                    <Icon icon="line-md:telegram" />
+                    Send Message
+                  </>
+                )}
               </Button>
             </form>
           </div>
