@@ -6,6 +6,8 @@ export default function HeroForm() {
   const [categoryValue, setCategoryValue] = useState("all");
 
   return (
+    <div className="px-5">
+
     <div className="d-flex flex-column w-100" >
       {/* <label>What was lost or found *</label>
       <input type="text" name="itemName" id="itemName" className="inputField" /> */}
@@ -22,5 +24,7 @@ export default function HeroForm() {
           <button className="text-white myBtn-primary mt-3 py-2  w-100"> Search</button>
       </Link>
     </div>
+    </div>
+
   );
 }
