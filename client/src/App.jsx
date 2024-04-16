@@ -13,6 +13,7 @@ import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import Dashboard from "./pages/dashboard/Dashboard";
 import UnAuthorized from "./components/UnAuthorized";
 import NotFound from "./NotFound";
+import ViewPost from "./pages/view-post/ViewPost";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/help-advice" element={<HelpAdvice />} />
         <Route path="/report-item" element={<ReportItem />} />
         <Route path="/unauthorized" element={<UnAuthorized />} />
+        <Route path="/view-post" element={<ViewPost />} />
         {/* user dashboard */}
         <Route element={<PrivateRoute allowedRoles={"user"}/>}>
         <Route path="/user" element={<Dashboard />}>

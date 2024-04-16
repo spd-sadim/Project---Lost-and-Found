@@ -24,7 +24,7 @@ export default function NavbarNav() {
             <Nav.Link href="/report-item" className="fw-bold">
               Report Item
             </Nav.Link>
-            <Nav.Link href="/view-item" className="fw-bold">
+            <Nav.Link href="/view-post" className="fw-bold">
               View Item
             </Nav.Link>
             <Nav.Link href="/help-advice" className="fw-bold">
