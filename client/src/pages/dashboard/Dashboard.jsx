@@ -6,7 +6,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 export default function Dashboard({type}) {
   const [isCollapse, setIsCollapse] = useState(false);
   return (
-    <div className="wrapper d-flex overflow-hidden">
+    <div className="wrapper d-flex">
       <Sidebar isCollapse={isCollapse} userType={type} />
       <main className="container-fluid content-container mt-2">
         <Icon
