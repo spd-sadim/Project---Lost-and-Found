@@ -17,6 +17,8 @@
   margin: 0;
   padding: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
 }
 
 /* btn style */
@@ -87,4 +89,7 @@
 }
 .bg-sec{
   background-color: #eef2f6;
+}
+.bg-pri{
+  background-color: #376679;
 }
