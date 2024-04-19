@@ -134,10 +134,11 @@ export default function Sidebar({ isCollapse }) {
 
   return (
     <aside
-      className={`sidebar-container vh-100 position-sticky ${
+      className={`sidebar-container  ${
         isCollapse ? "collapsed" : ""
       }`}
     >
+    <div className="vh-100 position-sticky top-0">
       <div className="sidebar-links px-3">
         <ul className="d-flex flex-column gap-1 list-unstyled">
           <Link
@@ -190,6 +191,7 @@ export default function Sidebar({ isCollapse }) {
             </li>
           ))}
         </ul>
+      </div>
       </div>
     </aside>
   );
