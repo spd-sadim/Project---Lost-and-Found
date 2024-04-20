@@ -109,7 +109,7 @@ export default function Footer() {
                       <input
                         type="email"
                         name="email"
-                        className="border-0 py-2 px-3 w-100 rounded"
+                        className="border-0 py-2 px-3 w-100 rounded footerField"
                         placeholder="Email Address"
                       />
                       <button
