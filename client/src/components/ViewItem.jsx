@@ -43,13 +43,13 @@ export default function ViewItem() {
             <td>
               <div className="d-flex gap-2">
                 <Link to={`/user/view-item/dfaf`}>
-                  <Icon icon="lets-icons:view-alt" />
+                  <Icon icon="lets-icons:view-alt" /> View
                 </Link>
                 <Link>
-                  <Icon icon="tabler:edit" />
+                  <Icon icon="tabler:edit" /> Edit
                 </Link>
-                <Link>
-                  <Icon icon="fluent:delete-24-regular" onClick={handleModal} />
+                <Link onClick={handleModal}>
+                  <Icon icon="fluent:delete-24-regular"/> Delete
                 </Link>
               </div>
             </td>
