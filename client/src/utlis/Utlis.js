@@ -18,12 +18,12 @@ export const addInputField = [
     label: "Where was lost?",
   },
   {
-    id: 3,
+    id: 4,
     type: "date",
     label: "Date lost lost?",
   },
   {
-    id: 4,
+    id: 5,
     type: "text",
     placeholder: "Additional Info",
     label: "Additional Information",
