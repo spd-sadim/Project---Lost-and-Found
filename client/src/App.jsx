@@ -14,8 +14,12 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import UnAuthorized from "./components/UnAuthorized";
 import NotFound from "./NotFound";
 import ViewPost from "./pages/view-post/ViewPost";
+import {foundInputField, lostInputField} from "./utlis/utlis.js"
+
 
 export default function App() {
+
+  
   return (
     <>
       {/* <NavbarNav /> */}
@@ -30,9 +34,12 @@ export default function App() {
         {/* user dashboard */}
         <Route element={<PrivateRoute allowedRoles={"user"}/>}>
         <Route path="/user" element={<Dashboard />}>
-          <Route path="/user/view-item" element={<ViewItem />} />
-          <Route path="/user/view-item/:id" element={<DetailedView />} />
-          <Route path="/user/add-item" element={<AddItem />} />
+          <Route path="/user/lost" element={<ViewItem />} />
+          <Route path="/user/lost/:id" element={<DetailedView />} />
+          <Route path="/user/lost/create" element={<AddItem addInputField={lostInputField} title="Lost" />}  />
+          <Route path="/user/found" element={<ViewItem />} />
+          <Route path="/user/found/:id" element={<DetailedView />} />
+          <Route path="/user/found/create" element={<AddItem addInputField={foundInputField}  title="Found" />} />
         </Route>
         {/* admin dashboard */}
         <Route element={<PrivateRoute allowedRoles={"admin"} />}>
