@@ -14,7 +14,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import UnAuthorized from "./components/UnAuthorized";
 import NotFound from "./NotFound";
 import ViewPost from "./pages/view-post/ViewPost";
-import {foundInputField, lostInputField} from "./utlis/utlis.js"
+import { foundInputField, lostInputField } from "./utils/utils";
 
 
 export default function App() {
