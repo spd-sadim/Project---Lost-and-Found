@@ -1,19 +1,19 @@
 import { useRef, useState } from "react";
 import { Col } from "react-bootstrap";
 import InputField from "./InputField";
-import { addInputField } from "../utlis/Utlis";
-import {Icon} from "@iconify-icon/react"
+import { Icon } from "@iconify-icon/react";
 import { categories } from "./category";
+import { personInputField } from "../utils/utils";
 
-export default function AddItem() {
+
+export default function AddItem({addInputField, title}) {
   const [image, setImage] = useState("");
-  const [isActiveStatus, setIsActiveStatus] = useState('report');
-
+  
   const [isPerson, setIsPerson] = useState(false);
 
+  const [data, setData] = useState({});
   
-
-  const handleChange = (e) => {
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
     const src = URL.createObjectURL(file);
     setImage(src);
@@ -29,23 +29,31 @@ export default function AddItem() {
     }
   };
 
-  const handleIsPerson = (e)=>{
-    setIsPerson( parseInt(e.target.value) === 10 ? true : false);
+  const handleIsPerson = (e) => {
+    setIsPerson(parseInt(e.target.value) === 10 ? true : false);
+  };
+
+  const handleChange = (e)=>{
+    const {name, value} = e.target;
+    console.log(name);
+    setData((prev)=> (
+      {...prev, [name]: value}
+    ))
+  
   }
+  console.log(data);
 
+  // console.log(isPerson);
 
-  console.log(isPerson);
-
-
-  const handleActiveStatus = (e)=>{
-    setIsActiveStatus(e.target.value)
-    
-  }
+  // const [isActiveStatus, setIsActiveStatus] = useState("report");
+  // const handleActiveStatus = (e) => {
+  //   setIsActiveStatus(e.target.value);
+  // };
   return (
     <div className="px-lg-5">
-      <h4 className="py-3">Add Lost Item</h4>
-      <div className="form-wrapper px-4 py-3 rounded border bg-white">
-        {/* <form>
+      <h4 className="py-3">Create <span>{title}</span> Post</h4>
+      {/* <div className="form-wrapper px-4 py-3 rounded border bg-white"> */}
+      {/* <form>
           <div className="row gy-3">
             <Col md="6">
               <label htmlFor="" className="d-flex flex-column mb-2">
@@ -100,38 +108,21 @@ export default function AddItem() {
               />
             </Col>
 
-            <Col md="6">
-              <div className="border mx-auto w-50 position-relative">
-                <button
-                  type="button"
-                  className="position-absolute end-0 top-2"
-                  onClick={handleFile}
-                >
-                  click
-                </button>
-                <img src={image} alt="" />
-              </div>
-              <input
-                type="file"
-                className="d-none"
-                name="imageEl"
-                id="imageFile"
-                accept="image/*"
-                onChange={handleChange}
-                ref={uploadRef}
-              />
-            </Col>
+            
           </div>
         </form> */}
 
-        <form>
+      <form>
+        <div className="form-wrapper px-4 py-3 rounded border bg-white">
           <div className="row gy-3">
             {addInputField.map((item) => (
               <Col md="6" key={item.id}>
                 <InputField
                   type={item.type}
                   placeholder={item?.placeholder}
+                  name={item.name}
                   label={item.label}
+                  handleChange={handleChange}
                 />
               </Col>
             ))}
@@ -146,33 +137,90 @@ export default function AddItem() {
             </Col>
              */}
             <Col md="6">
-            <label htmlFor="" className="mb-2">Category</label>
-            <select name="category" className="p-2 w-100 border" onChange={handleIsPerson}>
-      <option defaultValue={"all"}>All category</option>
-        {categories.map((category, index) => (
-          <option value={index+1} key={index}> {category} </option>
-        ))}
-      </select>
+              <label htmlFor="" className="fw-bold mb-2">
+                Category
+              </label>
+              <select
+                name="category"
+                className="p-2 w-100 border"
+                onChange={handleIsPerson}
+              >
+                <option defaultValue={"all"}>All category</option>
+                {categories.map((category, index) => (
+                  <option value={index + 1} key={index}>
+                    {" "}
+                    {category}{" "}
+                  </option>
+                ))}
+              </select>
             </Col>
 
-          {isPerson && <>
-            <Col md="6">
-           <InputField type='text' label='age' />
-            </Col>
-            <Col md="6">
-
-           <InputField type='text' label="Father's Name" />
-            </Col>
-            <Col md="6">
-           <InputField type='text' label="Mother's Name" />
-            </Col>
-            <Col md="6">
-           <InputField type='text' label="Skin color" />
-            </Col>
-          </>}
+            {/* render person inputField */}
+            {isPerson && ( personInputField.map((input)=>(
+              <Col md="4">
+                  <InputField type={input.type} name={input.name} placeholder={input.placeholder} label={input.label}  />
+              </Col>
+            ))
+            )}
           </div>
-        </form>
-      </div>
+        </div>
+
+        <div className="rounded border px-2 py-3 bg-white mt-3">
+          <label className="px-3 fw-bold">Image</label>
+          <hr />
+
+          {image ? (
+            <div className="image-preview-wrapper w-100 overflow-hidden bg-secondary position-relative rounded">
+              <button
+                type="button"
+                className="position-absolute border-0 rounded-circle bg-dark text-white px-3 py-2"
+                style={{ top: "5px", right: "5px" }}
+                onClick={() => setImage("")}
+              >
+                X
+              </button>
+              <div
+                className="mx-auto"
+                style={{ height: "259px", width: "259px" }}
+              >
+                <img
+                  src={image}
+                  className="img-fluid object-fit-contain"
+                  alt=""
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="w-100 d-flex align-items-center justify-content-center">
+              <p className="mb-0 user-select-none" onClick={handleFile}>
+                <span className="text-primary cursor-pointer">Browse</span> for
+                file
+              </p>
+              {/* <button
+                  type="button"
+                  className="position-absolute end-0 top-2"
+                  onClick={handleFile}
+                >
+                  click
+                </button> */}
+            </div>
+          )}
+          <input
+            type="file"
+            className="d-none"
+            name="imageEl"
+            id="imageFile"
+            accept="image/*"
+            onChange={handleFileChange}
+            ref={uploadRef}
+          />
+        </div>
+
+        <div className="buttons">
+          <button className="btn btn-secondary">Create</button>
+        </div>
+      </form>
     </div>
+    // </div>
   );
 }
