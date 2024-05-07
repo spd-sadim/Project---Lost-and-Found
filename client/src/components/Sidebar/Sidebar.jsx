@@ -28,12 +28,12 @@ export default function Sidebar({ isCollapse }) {
         {
           id: 1,
           subName: "Add Found Item",
-          subRoute: "/add-item",
+          subRoute: "/found/create",
         },
         {
           id: 2,
           subName: "View Found Item",
-          subRoute: "/view-item?v=found",
+          subRoute: "/found",
         },
       ],
     },
@@ -45,12 +45,12 @@ export default function Sidebar({ isCollapse }) {
         {
           id: 1,
           subName: "Add Lost Item",
-          subRoute: "/add-item",
+          subRoute: "/lost/create",
         },
         {
           id: 2,
           subName: "View Lost Item",
-          subRoute: "/view-item?v=lost",
+          subRoute: "/lost",
         },
       ],
     },

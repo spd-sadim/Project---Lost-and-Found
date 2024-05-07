@@ -42,7 +42,7 @@ export default function ViewItem() {
             </td>
             <td>
               <div className="d-flex gap-2">
-                <Link to={`/user/view-item/dfaf`} className="text-decoration-none" >
+                <Link to={`/user/lost/dfaf`} className="text-decoration-none" >
                   <Icon icon="lets-icons:view-alt" /> View
                 </Link>
                 <Link className="text-decoration-none" >
