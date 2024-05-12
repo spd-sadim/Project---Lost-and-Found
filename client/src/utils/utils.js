@@ -74,14 +74,14 @@ export const lostInputField = [
       label: "Father's Name",
     },
     {
-      id: 2,
+      id: 3,
       type: "text",
       name: 'motherName',
       placeholder: "Mother's Name",
       label: "Mother's Name",
     },
     {
-      id: 3,
+      id: 4,
       type: "text",
       name: 'skinColor',
       placeholder: "Skin color",
