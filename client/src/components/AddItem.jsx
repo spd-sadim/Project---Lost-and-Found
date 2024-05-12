@@ -4,15 +4,15 @@ import InputField from "./InputField";
 import { Icon } from "@iconify-icon/react";
 import { categories } from "./category";
 import { personInputField } from "../utils/utils";
+import axios from "axios";
 
-
-export default function AddItem({addInputField, title}) {
+export default function AddItem({ addInputField, title, endpoint }) {
   const [image, setImage] = useState("");
-  
+
   const [isPerson, setIsPerson] = useState(false);
 
   const [data, setData] = useState({});
-  
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     const src = URL.createObjectURL(file);
@@ -30,17 +30,31 @@ export default function AddItem({addInputField, title}) {
   };
 
   const handleIsPerson = (e) => {
-    setIsPerson(parseInt(e.target.value) === 10 ? true : false);
+    const { name, value } = e.target;
+    setIsPerson(parseInt(value) === 10 ? true : false);
+    setData((prev) => {
+      return { ...prev, [name]: parseInt(value) };
+    });
   };
 
-  const handleChange = (e)=>{
-    const {name, value} = e.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     console.log(name);
-    setData((prev)=> (
-      {...prev, [name]: value}
-    ))
-  
-  }
+    setData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  //submit post
+  const handleSubmit = async (e) => {
+    try {
+      if (isPerson) {
+        endpoint = "api";
+      }
+      const res = await axios.post(endpoint, data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   console.log(data);
 
   // console.log(isPerson);
@@ -51,67 +65,9 @@ export default function AddItem({addInputField, title}) {
   // };
   return (
     <div className="px-lg-5">
-      <h4 className="py-3">Create <span>{title}</span> Post</h4>
-      {/* <div className="form-wrapper px-4 py-3 rounded border bg-white"> */}
-      {/* <form>
-          <div className="row gy-3">
-            <Col md="6">
-              <label htmlFor="" className="d-flex flex-column mb-2">
-                <span>What was lost? *</span>
-              </label>
-              <input
-                type="text"
-                className="w-100  border rounded p-2"
-                name="name"
-                placeholder="What was lost"
-              />
-            </Col>
-         
-            <Col md="6">
-              <label htmlFor="" className="d-flex flex-column mb-2">
-                <span>Category *</span>{" "}
-              </label>
-              <input
-                type="text"
-                name="name"
-                className="p-2 w-100 border rounded"
-                placeholder="What was lost"
-              />
-            </Col>
-            <Col md="6">
-              <label htmlFor="" className="d-flex flex-column mb-2">
-                <span>Location *</span>{" "}
-              </label>
-              <input
-                type="text"
-                name="name"
-                className="p-2 w-100 border rounded"
-                placeholder="What was lost"
-              />
-            </Col>
-            <Col md="6">
-              <label htmlFor="" className="d-flex flex-column mb-2">
-                <span>Date lost</span> <span></span>
-              </label>
-              <input type="date" name="name" className="p-2 w-100 border rounded" />
-            </Col>
-
-            <Col md="6">
-              <label htmlFor="" className="d-flex flex-column mb-2">
-                <span>Additional Information</span> <span></span>
-              </label>
-              <input
-                type="text"
-                name="name"
-                placeholder="Additional Information"
-                className="p-2 w-100 border rounded"
-              />
-            </Col>
-
-            
-          </div>
-        </form> */}
-
+      <h4 className="py-3">
+        Create <span>{title}</span> Post
+      </h4>
       <form>
         <div className="form-wrapper px-4 py-3 rounded border bg-white">
           <div className="row gy-3">
@@ -156,12 +112,18 @@ export default function AddItem({addInputField, title}) {
             </Col>
 
             {/* render person inputField */}
-            {isPerson && ( personInputField.map((input)=>(
-              <Col md="4">
-                  <InputField type={input.type} name={input.name} placeholder={input.placeholder} label={input.label}  />
-              </Col>
-            ))
-            )}
+            {isPerson &&
+              personInputField.map((input) => (
+                <Col md="4" key={input.id}>
+                  <InputField
+                    type={input.type}
+                    name={input.name}
+                    placeholder={input.placeholder}
+                    label={input.label}
+                    handleChange={handleChange}
+                  />
+                </Col>
+              ))}
           </div>
         </div>
 
