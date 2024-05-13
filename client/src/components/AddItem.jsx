@@ -93,7 +93,7 @@ export default function AddItem({ addInputField, title, endpoint }) {
             </Col>
              */}
             <Col md="6">
-              <label htmlFor="" className="fw-bold mb-2">
+              <label className="fw-bold mb-2">
                 Category
               </label>
               <select
