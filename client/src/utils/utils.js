@@ -69,16 +69,16 @@ export const lostInputField = [
     {
       id: 2,
       type: "text",
-      name: 'fatherName',
-      placeholder: "Father's Name",
-      label: "Father's Name",
+      name: 'height',
+      placeholder: "Height (cm)",
+      label: "Height",
     },
     {
       id: 3,
       type: "text",
-      name: 'motherName',
-      placeholder: "Mother's Name",
-      label: "Mother's Name",
+      name: 'weight',
+      placeholder: "Weight (lbs)",
+      label: "Weight",
     },
     {
       id: 4,
