@@ -9,6 +9,8 @@ import axios from "axios";
 export default function AddItem({ addInputField, title, endpoint }) {
   const [image, setImage] = useState("");
 
+  console.log(image);
+
   const [isPerson, setIsPerson] = useState(false);
 
   const [data, setData] = useState({});
@@ -83,6 +85,11 @@ export default function AddItem({ addInputField, title, endpoint }) {
               </Col>
             ))}
 
+            <Col md="6">
+            <label htmlFor="additionalInfo" className="d-block mb-2 ">Additional Information</label>
+               <textarea className="w-100 p-2 border rounded" name="additional_info" rows={1} id="additionalInfo" placeholder="Additional Information"></textarea>
+              </Col>
+
             {/* <Col md="6">
               <label htmlFor="" className="mb-2"> Status </label>
               <div className="status-btn-group d-flex flex-wrap gap-2 fw-bold">
@@ -93,15 +100,17 @@ export default function AddItem({ addInputField, title, endpoint }) {
             </Col>
              */}
             <Col md="6">
-              <label htmlFor="" className="fw-bold mb-2">
+              <label htmlFor="cateogry" className="fw-bold mb-2">
                 Category
               </label>
               <select
                 name="category"
+                id="category"
                 className="p-2 w-100 border"
                 onChange={handleIsPerson}
+                defaultValue={'choose'}
               >
-                <option defaultValue={"all"}>All category</option>
+                <option disabled  hidden value='choose'>Please choose </option>
                 {categories.map((category, index) => (
                   <option value={index + 1} key={index}>
                     {" "}
