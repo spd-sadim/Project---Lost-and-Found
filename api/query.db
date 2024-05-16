@@ -1,0 +1,31 @@
+CREATE TABLE found_posts (
+    id SERIAL PRIMARY KEY,           -- Unique identifier for each post
+    item_name VARCHAR(255) NOT NULL, -- Name of the found item
+    location VARCHAR(255) NOT NULL,  -- Location where the item was found
+    date DATE NOT NULL,  -- Date when the item was found  
+	additional_info TEXT, -- Additional information about the item
+    category_id INT NOT NULL,        -- Foreign key referencing categories table
+              
+    image VARCHAR(255),              -- Path or URL to the image of the item
+    FOREIGN KEY (category_id)
+        REFERENCES categories (id)
+                 -- Optional: handle delete behavior
+);
+
+
+INSERT INTO categories (name) 
+VALUES 
+    ('Bags and accessories'),
+    ('Clothing'),
+    ('Documents and IDs'),
+    ('Electronics'),
+    ('Furniture'),
+    ('Medical Items'),
+    ('Miscellaneous Items'),
+    ('Money'),
+    ('Pets'),
+    ('Person'),
+    ('Personal Accessories'),
+    ('Stationery and Office supplies'),
+    ('Vehicles'),
+    ('Others');
