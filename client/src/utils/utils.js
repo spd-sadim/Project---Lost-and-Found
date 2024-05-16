@@ -49,13 +49,6 @@ export const lostInputField = [
       name: 'date',
       label: "Date found",
     },
-    {
-      id: 4,
-      type: "text",
-      name: 'additionalInfo',
-      placeholder: "Additional Info",
-      label: "Additional Information",
-    },
   ];
   
   export const personInputField = [
