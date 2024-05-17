@@ -1,24 +1,22 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Col } from "react-bootstrap";
 import InputField from "./InputField";
 import { Icon } from "@iconify-icon/react";
 import { categories } from "./category";
 import { personInputField } from "../utils/utils";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 
 export default function AddItem({ addInputField, title, endpoint }) {
-  const [image, setImage] = useState("");
-
-  console.log(image);
-
+  const [image, setImage] = useState(null);
   const [isPerson, setIsPerson] = useState(false);
-
   const [data, setData] = useState({});
+  const { user } = useContext(AuthContext);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    const src = URL.createObjectURL(file);
-    setImage(src);
+    // const src = URL.createObjectURL(file);
+    setImage(file);
   };
 
   //Create Reference to file input
@@ -47,30 +45,35 @@ export default function AddItem({ addInputField, title, endpoint }) {
 
   //submit post
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      if (isPerson) {
-        endpoint = "api";
+      const formData = new FormData();
+
+      // Append text data
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
+      // Append image file
+      if (image) {
+        formData.append("image", image);
       }
-      const res = await axios.post(endpoint, data);
+      formData.append("user_id", user.user_id);
+
+      // Update endpoint if it's a person
+      const apiEndpoint = isPerson ? "/endpoint" : endpoint;
+      console.log(data);
+      console.log("endpoint", endpoint);
+      const res = await axios.post(endpoint, formData);
     } catch (err) {
       console.log(err);
     }
   };
-
-  console.log(data);
-
-  // console.log(isPerson);
-
-  // const [isActiveStatus, setIsActiveStatus] = useState("report");
-  // const handleActiveStatus = (e) => {
-  //   setIsActiveStatus(e.target.value);
-  // };
   return (
     <div className="px-lg-5">
       <h4 className="py-3">
         Create <span>{title}</span> Post
       </h4>
-      <form>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="form-wrapper px-4 py-3 rounded border bg-white">
           <div className="row gy-3">
             {addInputField.map((item) => (
@@ -86,19 +89,18 @@ export default function AddItem({ addInputField, title, endpoint }) {
             ))}
 
             <Col md="6">
-            <label htmlFor="additionalInfo" className="d-block mb-2 ">Additional Information</label>
-               <textarea className="w-100 p-2 border rounded" name="additional_info" rows={1} id="additionalInfo" placeholder="Additional Information"></textarea>
-              </Col>
-
-            {/* <Col md="6">
-              <label htmlFor="" className="mb-2"> Status </label>
-              <div className="status-btn-group d-flex flex-wrap gap-2 fw-bold">
-                <button type="button" value="report" className={`btn  btn-outline-primary fw-bold d-flex align-items-center gap-2  ${isActiveStatus == 'report' ? 'active' : ''} `} onClick={handleActiveStatus}> <Icon icon="mdi:stars" width="26" height="26" /> Reported</button>
-                <button type="button" value="claim" className={`btn  btn-outline-secondary fw-bold d-flex align-items-center gap-2 ${isActiveStatus == 'claim' ? 'active' : ''}`} onClick={handleActiveStatus}><Icon icon="mdi:circular-arrows" width="26" height="26" /> Claimed</button>
-                <button type="button" value="return" className={`btn  btn-outline-success fw-bold d-flex align-items-center gap-2  ${isActiveStatus == 'return' ? 'active' : ''} `} onClick={handleActiveStatus}><Icon icon="ph:seal-check" width="26" height="26" /> Returned</button>
-              </div>
+              <label htmlFor="additionalInfo" className="d-block mb-2 fw-bold ">
+                Additional Information
+              </label>
+              <textarea
+                className="w-100 p-2 border rounded"
+                name="additional_info"
+                rows={1}
+                id="additionalInfo"
+                placeholder="Additional Information"
+                onChange={handleChange}
+              />
             </Col>
-             */}
             <Col md="6">
               <label htmlFor="cateogry" className="fw-bold mb-2">
                 Category
@@ -108,9 +110,12 @@ export default function AddItem({ addInputField, title, endpoint }) {
                 id="category"
                 className="p-2 w-100 border"
                 onChange={handleIsPerson}
-                defaultValue={'choose'}
+                defaultValue={"choose"}
+                required
               >
-                <option disabled  hidden value='choose'>Please choose </option>
+                <option disabled hidden value="choose">
+                  Please choose{" "}
+                </option>
                 {categories.map((category, index) => (
                   <option value={index + 1} key={index}>
                     {" "}
@@ -146,16 +151,16 @@ export default function AddItem({ addInputField, title, endpoint }) {
                 type="button"
                 className="position-absolute border-0 rounded-circle bg-dark text-white px-3 py-2"
                 style={{ top: "5px", right: "5px" }}
-                onClick={() => setImage("")}
+                onClick={() => setImage(null)}
               >
                 X
               </button>
               <div
                 className="mx-auto"
-                style={{ height: "259px", width: "259px" }}
+                style={{ height: "auto", width: "259px" }}
               >
                 <img
-                  src={image}
+                  src={URL.createObjectURL(image)}
                   className="img-fluid object-fit-contain"
                   alt=""
                 />
@@ -167,13 +172,6 @@ export default function AddItem({ addInputField, title, endpoint }) {
                 <span className="text-primary cursor-pointer">Browse</span> for
                 file
               </p>
-              {/* <button
-                  type="button"
-                  className="position-absolute end-0 top-2"
-                  onClick={handleFile}
-                >
-                  click
-                </button> */}
             </div>
           )}
           <input
@@ -184,14 +182,15 @@ export default function AddItem({ addInputField, title, endpoint }) {
             accept="image/*"
             onChange={handleFileChange}
             ref={uploadRef}
+            required
           />
         </div>
-
         <div className="buttons">
-          <button className="btn btn-secondary">Create</button>
+          <button type="submit" className="btn btn-secondary">
+            Create
+          </button>
         </div>
       </form>
     </div>
-    // </div>
   );
 }
