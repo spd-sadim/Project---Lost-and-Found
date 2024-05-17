@@ -1,21 +1,40 @@
 import Table from "react-bootstrap/Table";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 
-export default function ViewItem() {
+export default function ViewItem({type}) {
   const [show, setShow] = useState(false);
+  const [items, setItems] = useState([]);
 
+  const {user} = useContext(AuthContext); 
   const handleModal = () => {
     setShow(!show);
   };
 
+  useEffect(() => {
+    // Define an async function to fetch data
+    setItems([])
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/${type}/${user.user_id}`);
+        setItems(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    // Call the async function to fetch data
+    fetchData();
+  }, [type, user.user_id]);
+
   return (
-    <div>
-      <div className=" d-flex justify-content-between w-100 mb-3">
-        <h4>View Lost Items</h4>
+    <div className="px-lg-5">
+      <div className=" d-flex justify-content-between w-100 my-3">
+        <h4 className="">View {type} Items</h4>
         <button className="btn btn-dark">+ New Item</button>
       </div>
       <Table responsive bordered hover size="lg">
@@ -23,26 +42,28 @@ export default function ViewItem() {
           <tr>
             <th>Item-ID</th>
             <th>Item name</th>
+            <th>Location {type}</th>
+            <th>Date {type}</th>
             <th>Category</th>
-            <th>Date lost</th>
-            <th>Location lost</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Samsung</td>
-            <td>Mobile phone</td>
-            <td>2024-02-22</td>
-            <td>Barcelona, Spain</td>
+        {
+         items.length > 0 ? items.map((item)=>(
+            <tr key={item.id}>
+            <td>{item.id}</td>
+            <td>{item.item_name}</td>
+            <td>{item.location}</td>
+            <td>{item.date.split("T")[0]}</td>
+            <td>{item.category_id}</td>
             <td>
               <button className="btn btn-secondary">Reported</button>
             </td>
             <td>
-              <div className="d-flex gap-2">
-                <Link to={`/user/lost/dfaf`} className="text-decoration-none" >
+              <div className="d-flex gap-2"> 
+                <Link to={`/user/lost/${item.id}?type=${type}`} className="text-decoration-none" >
                   <Icon icon="lets-icons:view-alt" /> View
                 </Link>
                 <Link className="text-decoration-none" >
@@ -53,12 +74,15 @@ export default function ViewItem() {
                 </Link>
               </div>
             </td>
-          </tr>
+            </tr>
+         )) : (<tr> <td colSpan='7'>There is no data</td></tr>)
+        }
+        
         </tbody>
       </Table>
 
       {/* modal */}
-      <Modal
+      <Modal  
         show={show}
         onHide={handleModal}
         backdrop="static"
