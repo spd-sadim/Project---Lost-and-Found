@@ -34,12 +34,12 @@ export default function App() {
         {/* user dashboard */}
         <Route element={<PrivateRoute allowedRoles={"user"}/>}>
         <Route path="/user" element={<Dashboard />}>
-          <Route path="/user/lost" element={<ViewItem />} />
+          <Route path="/user/found" element={<ViewItem type='found'/>} />
+          <Route path="/user/found/:id" element={<DetailedView />} />
+          <Route path="/user/found/create" element={<AddItem addInputField={foundInputField} endpoint={'/api/found/create'} title="Found" />} />
+          <Route path="/user/lost" element={<ViewItem type='lost'/>} />
           <Route path="/user/lost/:id" element={<DetailedView />} />
           <Route path="/user/lost/create" element={<AddItem addInputField={lostInputField} title="Lost" />}  />
-          <Route path="/user/found" element={<ViewItem />} />
-          <Route path="/user/found/:id" element={<DetailedView />} />
-          <Route path="/user/found/create" element={<AddItem addInputField={foundInputField}  title="Found" />} />
         </Route>
         {/* admin dashboard */}
         <Route element={<PrivateRoute allowedRoles={"admin"} />}>
