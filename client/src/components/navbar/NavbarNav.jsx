@@ -5,6 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import {Icon} from "@iconify-icon/react"
 
 export default function NavbarNav() {
   const {user} = useContext(AuthContext);
@@ -32,7 +33,7 @@ export default function NavbarNav() {
             </Nav.Link>
           </Nav>
          
-          {user ? <Link to={`/${user.role}`}> {user.role} </Link> :
+          {user ? <Link to={`/${user.role}`}> <Icon icon="mingcute:user-4-line" width="32" height="32" title="user" className="text-white"/> </Link> :
             <div className="auth-buttons d-flex gap-2 ">
               <Link to="/login">
                 <Button
