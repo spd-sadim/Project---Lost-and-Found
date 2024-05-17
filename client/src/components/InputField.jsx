@@ -11,6 +11,7 @@ export default function InputField({ label,name, type, placeholder, handleChange
         className=" w-100 border rounded p-2"
         placeholder={placeholder}
         onChange={handleChange}
+        required
       />
     </div>
   );
