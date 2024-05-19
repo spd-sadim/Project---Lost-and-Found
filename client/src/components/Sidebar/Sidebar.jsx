@@ -63,7 +63,7 @@ export default function Sidebar({ isCollapse }) {
         {
           id: 1,
           subName: "User Profile",
-          subRoute: "/user",
+          subRoute: "/profile",
         },
         {
           id: 2,
