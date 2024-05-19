@@ -7,24 +7,24 @@ import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
-export default function ViewItem({type}) {
+export default function ViewItem({ type }) {
   const [show, setShow] = useState(false);
   const [items, setItems] = useState([]);
 
-  const {user} = useContext(AuthContext); 
+  const { user } = useContext(AuthContext);
   const handleModal = () => {
     setShow(!show);
   };
 
   useEffect(() => {
     // Define an async function to fetch data
-    setItems([])
+    setItems([]);
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/${type}/${user.user_id}`);
         setItems(response.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
     // Call the async function to fetch data
@@ -41,6 +41,7 @@ export default function ViewItem({type}) {
         <thead>
           <tr>
             <th>Item-ID</th>
+            <th>Item image</th>
             <th>Item name</th>
             <th>Location {type}</th>
             <th>Date {type}</th>
@@ -50,39 +51,50 @@ export default function ViewItem({type}) {
           </tr>
         </thead>
         <tbody>
-        {
-         items.length > 0 ? items.map((item)=>(
-            <tr key={item.id}>
-            <td>{item.id}</td>
-            <td>{item.item_name}</td>
-            <td>{item.location}</td>
-            <td>{item.date.split("T")[0]}</td>
-            <td>{item.category_id}</td>
-            <td>
-              <button className="btn btn-secondary">Reported</button>
-            </td>
-            <td>
-              <div className="d-flex gap-2"> 
-                <Link to={`/user/lost/${item.id}?type=${type}`} className="text-decoration-none" >
-                  <Icon icon="lets-icons:view-alt" /> View
-                </Link>
-                <Link className="text-decoration-none" >
-                  <Icon icon="tabler:edit" /> Edit
-                </Link>
-                <Link  className="text-decoration-none" onClick={handleModal}>
-                  <Icon icon="fluent:delete-24-regular"/> Delete
-                </Link>
-              </div>
-            </td>
+          {items.length > 0 ? (
+            items.map((item) => (
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td><img src={`http://localhost:3000/Images/${item.image}`} style={{width: "4em", height: "4em"}} alt="" /></td>
+                <td>{item.item_name}</td>
+                <td>{item.location}</td>
+                <td>{item.date.split("T")[0]}</td>
+                <td>{item.category_id}</td>
+                <td>
+                  <button className="btn btn-secondary rounded-pill">Reported</button>
+                </td>
+                <td>
+                  <div className="d-flex gap-2 justify-content-center">
+                    <Link
+                      to={`/user/lost/${item.id}?type=${type}`}
+                      className="text-decoration-none"
+                    >
+                      <Icon icon="lets-icons:view-alt" />View
+                    </Link>
+                    <Link className="text-decoration-none text-success">
+                      <Icon icon="tabler:edit" /> Edit
+                    </Link>
+                    <Link
+                      className="text-decoration-none text-danger"
+                      onClick={handleModal}
+                    >
+                      <Icon icon="fluent:delete-24-regular" /> Delete
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              {" "}
+              <td colSpan="7">There is no data</td>
             </tr>
-         )) : (<tr> <td colSpan='7'>There is no data</td></tr>)
-        }
-        
+          )}
         </tbody>
       </Table>
 
       {/* modal */}
-      <Modal  
+      <Modal
         show={show}
         onHide={handleModal}
         backdrop="static"
