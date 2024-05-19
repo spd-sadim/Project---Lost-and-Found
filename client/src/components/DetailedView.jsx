@@ -37,6 +37,7 @@ export default function DetailedView() {
 
   useEffect(() => {
     // Fetch item details using the ID
+    setItem([]);
     axios.get(`/api/${type}/view/${id}`)
       .then(response => {
         setItem(response.data[0]);
@@ -44,7 +45,7 @@ export default function DetailedView() {
       .catch(error => {
         console.error('Error fetching item details:', error);
       });
-  }, []);
+  }, [type, id]);
 console.log(item[0]);
   return (
     <div>
