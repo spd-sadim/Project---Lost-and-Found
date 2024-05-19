@@ -30,8 +30,8 @@
   border: 1px solid var(--secondary-color);
 }
 .myBtn-primary {
-  background-color: var(--primary-color);
-  border: 1px solid var(--primary-color);
+  background-color: var( --list-button-color1);
+  border: 1px solid var( --list-button-color1);
 }
 
 .inputField {
@@ -50,21 +50,34 @@
   left: 0;
   top: 50%;
   background-color: var(
-    --primary-color
+    --list-primary-color
   );
 }
 .heading-after::after{
   content: "";
   position: absolute;
   width: 40%;
-  height: 0.2rem;
+  height: 0.125rem;
   right: 0;
   top: 50%;
   background-color: var(
-    --primary-color
+    --list-primary-color
   );
 }
+.navbar-custom {
+  background-color: #101336;
+}
 
+.navbar-custom .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+.navbar-custom .nav-link {
+  color: white;
+}
+
+.navbar-custom .nav-link:hover {
+  color: #ddd ; /* Optional: lighter color on hover */
+}
 @media only screen and (max-width: 600px) {
   .announcement-heading::before {
     width: 20vw; 
@@ -86,6 +99,9 @@
 
 .font-sec{
   color: var(--list-font-secondary);
+}
+.font-pri{
+  color: #02c5bd;
 }
 .bg-sec{
   background-color: #eef2f6;
