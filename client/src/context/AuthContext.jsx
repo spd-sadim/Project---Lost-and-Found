@@ -45,6 +45,12 @@ const AuthReducer = (state, action) => {
         error: null,
       };
 
+      case "updateProfileSuccess":
+        return {
+          ...state,
+          user: action.payload,
+        };
+
     default:
       return state;
   }
@@ -54,7 +60,7 @@ export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
   useEffect(()=>{
     localStorage.setItem("user", JSON.stringify(state.user));
-  })
+  }, [state.user])
   return (
     <AuthContext.Provider
       value={{
