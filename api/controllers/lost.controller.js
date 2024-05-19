@@ -1,4 +1,5 @@
 import { createPost } from "./found.controller.js";
+import pool from "../db.js";
 
 export const createLostPost = async(req, res)=>{
     const {name, location, date, additional_info, category , user_id} = req.body;
@@ -14,11 +15,19 @@ export const createLostPost = async(req, res)=>{
     }
  }
 
+ export const getLostPostById = async (req, res, next) => {
+    try {
+        const lostPost = await pool.query("SELECT * FROM lost_posts WHERE id = $1", [req.params.id]);
+        res.status(200).json(lostPost.rows); 
+    } catch (err) {
+        next(500, 'Error executing code')
+    }
+}
 
  export const getLostPostByUserId = async (req, res, next) => {
     try {
-        const foundPost = await pool.query("SELECT * FROM lost_posts WHERE user_id = $1", [req.params.id]);
-        res.status(200).json(foundPost.rows); 
+        const lostPosts = await pool.query("SELECT * FROM lost_posts WHERE user_id = $1", [req.params.id]);
+        res.status(200).json(lostPosts.rows); 
     } catch (err) {
         next(500, 'Error executing code')
     }
