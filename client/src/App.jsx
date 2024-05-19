@@ -15,6 +15,7 @@ import UnAuthorized from "./components/UnAuthorized";
 import NotFound from "./NotFound";
 import ViewPost from "./pages/view-post/ViewPost";
 import { foundInputField, lostInputField } from "./utils/utils";
+import Profile from "./components/dashboard/Profile";
 
 
 export default function App() {
@@ -36,10 +37,11 @@ export default function App() {
         <Route path="/user" element={<Dashboard />}>
           <Route path="/user/found" element={<ViewItem type='found'/>} />
           <Route path="/user/found/:id" element={<DetailedView />} />
+          <Route path="/user/profile" element={<Profile />} />
           <Route path="/user/found/create" element={<AddItem addInputField={foundInputField} endpoint={'/api/found/create'} title="Found" />} />
           <Route path="/user/lost" element={<ViewItem type='lost'/>} />
           <Route path="/user/lost/:id" element={<DetailedView />} />
-          <Route path="/user/lost/create" element={<AddItem addInputField={lostInputField} title="Lost" />}  />
+          <Route path="/user/lost/create" element={<AddItem addInputField={lostInputField} endpoint={'/api/lost/create'} title="Lost" />}  />
         </Route>
         {/* admin dashboard */}
         <Route element={<PrivateRoute allowedRoles={"admin"} />}>
