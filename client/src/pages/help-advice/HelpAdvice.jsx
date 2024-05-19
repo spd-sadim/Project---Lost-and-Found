@@ -1,9 +1,12 @@
 import HelpAdviceForm from "../../components/Help-advice/HelpAdviceForm";
 import Footer from "../../components/footer/Footer";
+import NavbarNav from "../../components/navbar/NavbarNav";
 
 export default function HelpAdvice() {
   return (
-    <section>
+    <>
+    <NavbarNav />
+    <section className="py-5 mt-5">
       <HelpAdviceForm />
       {/* map */}
       <iframe
@@ -18,5 +21,6 @@ export default function HelpAdvice() {
       ></iframe>  
       <Footer />
     </section>
+    </>
   )
 }
