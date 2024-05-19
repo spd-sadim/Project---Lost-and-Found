@@ -24,11 +24,11 @@ export default function HowItWorks() {
       title: "Help Item get home",
       img: img3,
       description:
-        "Contact the person who found/ lost item so that item can return home",
+        "Contact the person who found / lost item so that item can return home",
     },
   ];
   return (
-    <section className="py-5">
+    <section className="py-5 my-5">
       <div className="title text-center position-relative py-2">
         <h3 className="heading-after font-primary fw-bold">How it works</h3>
       </div>
@@ -39,7 +39,7 @@ export default function HowItWorks() {
               <div className="text-center">
                 <h5 className="font-primary fw-bold">{work.title}</h5>
                 <img src={work.img} alt="How it works image" className="mw-100 h-100"/>
-                <p className="font-primary">{work.description}</p>
+                <p className="font-sec mt-4">{work.description}</p>
               </div>
             </Col>
           ))}
