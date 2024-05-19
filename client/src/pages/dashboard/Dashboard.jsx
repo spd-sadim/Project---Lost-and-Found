@@ -18,8 +18,8 @@ export default function Dashboard({ type }) {
                 setIsCollapse(!isCollapse);
               }}
             />
-            <div className="user">
-              <span>user</span>
+            <div className="user p-2">
+            <Icon icon="guidance:user-1" style={{fontSize: "2.5rem"}} />
             </div>
           </div>
         </nav>
