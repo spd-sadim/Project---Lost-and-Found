@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { categories } from "../../components/category";
+import NavbarNav from "../../components/navbar/NavbarNav";
+import axios from "axios";
+import AnnouncementCard from "../../components/Announcement/AnnouncementCard";
 
 const Filter = ({ handleChange }) => {
   return (
     <div className="filters d-flex flex-column gap-4">
-    <div className="d-flex justify-content-between">
-      <h3>Filter</h3>
-      <input type="reset" value="clear" className="border-0 bg-white"/>
-    </div>
+      <div className="d-flex justify-content-between">
+        <h3>Filter</h3>
+        <input type="reset" value="clear" className="border-0 bg-white" />
+      </div>
       <div className="filter-category">
         <select
           name="category"
@@ -30,7 +33,7 @@ const Filter = ({ handleChange }) => {
       </div>
       <div className="status">
         <select
-          id='status'
+          id="status"
           className="p-2 w-100 border"
           defaultValue={"All"}
           onChange={handleChange}
@@ -61,7 +64,13 @@ const Filter = ({ handleChange }) => {
           onChange={handleChange}
         />
       </div>
-      <button style={{backgroundColor: "#cf2e2e"}} className="p-3 border-0 text-white rounded fw-bold" onClick={console.log("apply ")}>Apply Filters</button>
+      <button
+        style={{ backgroundColor: "#cf2e2e" }}
+        className="p-3 border-0 rounded fw-bold"
+        onClick={console.log("apply ")}
+      >
+        Apply Filters
+      </button>
     </div>
   );
 };
@@ -74,37 +83,65 @@ export default function ViewPost() {
     location: "",
     keywords: "",
   });
+  //   useEffect(() => {
+  //     const fetchPosts = async () => {
+  //         try {
+  //             const response = await axios.get('/api/posts/', { params: filters });
+  //             setPosts(response.data);
+  //         } catch (error) {
+  //             console.error('Error fetching posts:', error);
+  //         }
+  //     };
+  //     fetchPosts();
+  // }, [filters]);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-        try {
-            const response = await axios.get('/api/posts', { params: filters });
-            setPosts(response.data);
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-        }
-    };
-    fetchPosts();
-}, [filters]);
-
-  console.log(filters);
+  // console.log(filters);
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.id]: e.target.value });
   };
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("/api/posts/all");
+        setPosts(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchPosts();
+  }, []);
+
   return (
     <div>
-      <section className="breacrumb"></section>
-      <main className="mt-5">
+      <NavbarNav />
+      <main className="mt-5 py-5">
         <Container>
+          <section className="breacrumb py-5 fw-bold text-dark">
+            <a href="/" className="text-dark text-decoration-none">
+              Home{" "}
+            </a>
+            / Listing
+          </section>
           <Row>
             <Col lg="3">
               <Filter handleChange={handleFilterChange} />
             </Col>
             <Col lg="9">
-              <div>content</div>
-              <section>
-                  here post
-              </section>
+              <div className="py-2">
+                <p>Showing 1-10 of 12 Results</p>
+              </div>
+              <Container>
+                <div className="row gx-2 gy-3">
+                {
+                  posts.map((post, index)=>(
+                    <Col md={4} key={index}>
+                      <AnnouncementCard item={post}/>
+                    </Col>
+                  ))
+                }
+                
+                </div>
+              </Container>
             </Col>
           </Row>
         </Container>
