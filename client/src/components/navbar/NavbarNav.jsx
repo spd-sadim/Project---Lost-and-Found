@@ -6,13 +6,14 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import {Icon} from "@iconify-icon/react"
+import logo from "../../assets/logo.png"
 
 export default function NavbarNav() {
   const {user} = useContext(AuthContext);
   return (
-    <Navbar expand="lg" fixed="top" className="bg-body-tertiary">
+    <Navbar expand="lg" fixed="top" className="navbar-custom" >
       <Container>
-        <Navbar.Brand href="/">Bhetayoo</Navbar.Brand>
+        <Navbar.Brand href="/"><img src={logo} alt="" /></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto py-2">
