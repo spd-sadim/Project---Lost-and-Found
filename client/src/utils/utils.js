@@ -3,8 +3,8 @@ export const lostInputField = [
       id: 1,
       type: "text",
       name: 'name',
-      placeholder: "What was lost?",
-      label: "What was lost",
+      placeholder: "What was lost",
+      label: "What was lost?",
     },
    
     {
@@ -26,8 +26,8 @@ export const lostInputField = [
       id: 1,
       type: "text",
       name: 'name',
-      placeholder: "What was found?",
-      label: "What was found",
+      placeholder: "What was found",
+      label: "What was found?",
     },
     {
       id: 2,
