@@ -1,54 +1,32 @@
 import AnnouncementCard from "./AnnouncementCard";
 import { Col, Container, Row } from "react-bootstrap";
-import image from "../../assets/samsung.jpg";
+import { useEffect, useState } from "react";
+import axios from 'axios';
 
 export default function Announcement() {
-  const items = [
-    {
-      id: 1,
-      name: "Samsung s21",
-      category: "mobile",
-      img: image,
-      location: "Kiritipur",
-      status: "Found",
-      date: "2024-02-40",
-    },
-    {
-      id: 2,
-      name: "Samsung s21",
-      category: "mobile",
-      img: image,
-      location: "Kiritipur",
-      status: "Found",
-      date: "2024-02-40",
-    },
-    {
-      id: 3,
-      name: "Samsung s21",
-      category: "mobile",
-      img: image,
-      location: "Kiritipur",
-      status: "Lost",
-      date: "2024-02-40",
-    },
-    {
-      id: 4,
-      name: "Samsung s21",
-      category: "mobile",
-      img: image,
-      location: "Kiritipur",
-      status: "Found",
-      date: "2024-02-40",
-    },
-  ];
+  const [posts, setPosts] = useState([])
+
+  useEffect(()=>{
+    const fetchData = async()=>{
+      try{
+
+        const response = await axios.get('/api/posts/all')
+        setPosts(response.data);
+      } catch(err){
+        alert(err);
+      }
+
+    }
+    fetchData();
+  }, [])
   return (
     <div className="py-2">
       <div className="title py-5 text-center position-relative">
-        <h3 className="heading font-primary fw-bold">Announcement</h3>
+        <h3 className="heading primary-color fw-bold">Announcement</h3>
       </div>
       <Container>
         <Row gap={8} className="gy-3" >
-          {items.map((item) => (
+          {posts.map((item) => (
             <Col lg={3} md={4} key={item.id}>
               <AnnouncementCard item={item} />
             </Col>
