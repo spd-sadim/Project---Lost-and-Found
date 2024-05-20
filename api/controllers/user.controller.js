@@ -7,7 +7,6 @@ export const getUsers = async(req, res)=>{
    } catch (err) {
             res.status(500).json({error: err});
        }
-        // res.json({message: "hello"});
 }
 
 export const updateUser = async(req, res)=>{
@@ -23,15 +22,13 @@ export const updateUser = async(req, res)=>{
       `;
 //       const  number = parseInt(user_phonenumber, 10); 
       const values = [ user_firstname, user_lastname, user_phonenumber, user_email, id];
-        console.log(values)
         try {
               const response = await pool.query(query, values);
-                console.log(response.rows);
               if (response.rows.length === 0) {
                 return res.status(404).json({ error: 'User not found' });
               }
-
-              res.status(200).json({message: 'Profile updated succesfully', user: response.rows[0]});
+              const {user_password, ...userData } = response.rows[0];
+              res.status(200).json({message: 'Profile updated succesfully', user: userData});
         } catch(err){
                 console.log(err);
         }
