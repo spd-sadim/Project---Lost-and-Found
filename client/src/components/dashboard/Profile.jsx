@@ -3,9 +3,11 @@ import InputField from "../InputField";
 import { AuthContext } from "../../context/AuthContext";
 import {Col} from "react-bootstrap"
 import axios from 'axios';
+import { useNavigate } from "react-router";
 
 export default function Profile() {
   const { user, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: user.user_id,
     user_firstname: user.user_firstname,
@@ -35,7 +37,7 @@ export default function Profile() {
   const handleLogout = () => {
     dispatch({ type: "logout" });
     localStorage.removeItem("user");
-    history.push("/login"); // Redirect to login page
+    navigate('/login');
   };
 
   console.log(user);
