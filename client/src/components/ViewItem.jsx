@@ -10,9 +10,11 @@ import { AuthContext } from "../context/AuthContext";
 export default function ViewItem({ type }) {
   const [show, setShow] = useState(false);
   const [items, setItems] = useState([]);
+  const [deleteId, setDeleteId] = useState(null);
 
   const { user } = useContext(AuthContext);
-  const handleModal = () => {
+  const handleModal = (id) => {
+    setDeleteId(id);
     setShow(!show);
   };
 
@@ -30,6 +32,26 @@ export default function ViewItem({ type }) {
     // Call the async function to fetch data
     fetchData();
   }, [type, user.user_id]);
+
+  const deletePost = async (id) => {
+    try {
+      console.log("api id", id);
+      await axios.delete(`/api/${type}/delete/${id}`);
+      setItems(items.filter((item) => item.id != id));
+      setShow(false);
+    } catch (err) {
+      console.error("Error deleting item", err);
+    }
+  };
+
+  const handleDeleteItem = () => {
+    if (deleteId) {
+      deletePost(deleteId);
+    } else {
+      
+      alert("Something went wrong");
+    }
+  };
 
   return (
     <div className="px-lg-5">
@@ -55,13 +77,21 @@ export default function ViewItem({ type }) {
             items.map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
-                <td><img src={`http://localhost:3000/Images/${item.image}`} style={{width: "4em", height: "4em"}} alt="" /></td>
+                <td>
+                  <img
+                    src={`http://localhost:3000/Images/${item.image}`}
+                    style={{ width: "4em", height: "4em" }}
+                    alt=""
+                  />
+                </td>
                 <td>{item.item_name}</td>
                 <td>{item.location}</td>
                 <td>{item.date.split("T")[0]}</td>
                 <td>{item.category_id}</td>
                 <td>
-                  <button className="btn btn-secondary rounded-pill">Reported</button>
+                  <button className="btn btn-secondary rounded-pill">
+                    Reported
+                  </button>
                 </td>
                 <td>
                   <div className="d-flex gap-2 justify-content-center">
@@ -69,14 +99,15 @@ export default function ViewItem({ type }) {
                       to={`/user/lost/${item.id}?type=${type}`}
                       className="text-decoration-none"
                     >
-                      <Icon icon="lets-icons:view-alt" />View
+                      <Icon icon="lets-icons:view-alt" />
+                      View
                     </Link>
                     <Link className="text-decoration-none text-success">
                       <Icon icon="tabler:edit" /> Edit
                     </Link>
                     <Link
                       className="text-decoration-none text-danger"
-                      onClick={handleModal}
+                      onClick={() => handleModal(item.id)}
                     >
                       <Icon icon="fluent:delete-24-regular" /> Delete
                     </Link>
@@ -106,7 +137,9 @@ export default function ViewItem({ type }) {
           <Button variant="secondary" onClick={handleModal}>
             No
           </Button>
-          <Button variant="danger">Yes</Button>
+          <Button variant="danger" onClick={handleDeleteItem}>
+            Yes
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>
