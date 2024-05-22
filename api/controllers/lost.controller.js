@@ -1,5 +1,6 @@
-import { createPost } from "./found.controller.js";
+import { createPost, deletePost } from "./found.controller.js";
 import pool from "../db.js";
+import { errorHandler } from "../utils/error.js";
 
 export const createLostPost = async(req, res)=>{
     const {name, location, date, additional_info, category , user_id} = req.body;
@@ -39,5 +40,15 @@ export const createLostPost = async(req, res)=>{
         res.status(200).json(result.rows);
     } catch (err){
         next(500, 'Error executing code')
+    }
+}
+
+
+export const deleteLostPost = async (req, res)=>{
+    try {
+        await deletePost('lost_posts', [req.params.id]);
+        res.status(200).json({message: "Deleted item succesfully"});
+    } catch (err){
+        next(errorHandler(500, 'Error executing code', err))
     }
 }

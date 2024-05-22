@@ -1,4 +1,5 @@
 import pool from "../db.js";
+import { errorHandler } from "../utils/error.js";
 
 
 export const createPost = (tableName, values,)=>{
@@ -6,6 +7,10 @@ export const createPost = (tableName, values,)=>{
    return pool.query(sql, values)
 }
 
+export const deletePost = (tableName, id)=>{
+    const sql = `DELETE FROM ${tableName} WHERE id = ${id}`;
+    return pool.query(sql);
+}
 
 export const createFoundPost = async(req, res)=>{
    const {name, location, date, additional_info, category , user_id} = req.body;
@@ -26,7 +31,7 @@ export const getFoundPostByUserId = async (req, res, next) => {
         const foundPost = await pool.query("SELECT * FROM found_posts WHERE user_id = $1", [req.params.id]);
         res.status(200).json(foundPost.rows); 
     } catch (err) {
-        next(500, 'Error executing code')
+        next(errorHandler(500, 'Error executing code', err))
     }
 }
 
@@ -35,7 +40,7 @@ export const getFoundPostById = async (req, res, next) => {
         const foundPost = await pool.query("SELECT * FROM found_posts WHERE id = $1", [req.params.id]);
         res.status(200).json(foundPost.rows); 
     } catch (err) {
-        next(500, 'Error executing code')
+        next(errorHandler(500, 'Error executing code', err))
     }
 }
 
@@ -44,6 +49,17 @@ export const getAllFoundPost = async(req, res, next) => {
         const result = await pool.query('SELECT * FROM found_posts');
         res.status(200).json(result.rows);
     } catch (err){
-        next(500, 'Error executing code')
+        next(errorHandler(500, 'Error executing code', err))
+    }
+}
+
+
+export const deleteFoundPost = async (req, res)=>{
+    try{
+        console.log(req.params.id);
+        deletePost('found_posts', req.params.id);
+        res.status(200).json({message: "Deleted item succesfully"});
+    } catch (err){
+       ;
     }
 }
