@@ -48,6 +48,12 @@ export default function App() {
         <Route element={<PrivateRoute allowedRoles={"admin"} />}>
         <Route path="/admin" element={<Dashboard />} > 
           <Route path="/admin/profile" element={<Profile />} />
+          <Route path="/admin/found" element={<ViewItem type='found'/>} />
+          <Route path="/admin/found/:id" element={<DetailedView />} />
+          <Route path="/admin/found/create" element={<AddItem addInputField={foundInputField} endpoint={'/api/found/create'} title="Found" />} />
+          <Route path="/admin/lost" element={<ViewItem type='lost'/>} />
+          <Route path="/admin/lost/:id" element={<DetailedView />} />
+          <Route path="/admin/lost/create" element={<AddItem addInputField={lostInputField} endpoint={'/api/lost/create'} title="Lost" />}  />
         </Route>
         </Route>
         {/* 404 not found */}
