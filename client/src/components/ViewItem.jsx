@@ -96,7 +96,7 @@ export default function ViewItem({ type }) {
                 <td>
                   <div className="d-flex gap-2 justify-content-center">
                     <Link
-                      to={`/user/lost/${item.id}?type=${type}`}
+                      to={`/${user.role}/lost/${item.id}?type=${type}`}
                       className="text-decoration-none"
                     >
                       <Icon icon="lets-icons:view-alt" />
