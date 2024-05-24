@@ -91,18 +91,13 @@ export default function Sidebar({ isCollapse }) {
     },
     {
       id: 6,
-      name: "Dummy",
+      name: "Users",
       icon: <Icon icon="clarity:notification-solid" />,
       subLinks: [
         {
-          id: 1,
-          subName: "Lost Notification",
-          subRoute: "/lost/notification",
-        },
-        {
           id: 2,
-          subName: "Found Notification",
-          subRoute: "/found/notification",
+          subName: "Users",
+          subRoute: "/users",
         },
       ],
     },
