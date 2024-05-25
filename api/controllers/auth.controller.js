@@ -56,7 +56,7 @@ export const signIn = async (req, res, next) => {
     const expiryDate = new Date(Date.now() + 3600000);
 
     res
-      .cookie("access-token", token, { httpOnly: true, expires: expiryDate }) //httpOnly: true, prevents third party app to modify cookie
+      .cookie("access_token", token, { httpOnly: true, expires: expiryDate }) //httpOnly: true, prevents third party app to modify cookie
       .status(200)
       .json(rest);
   } catch (err) {
