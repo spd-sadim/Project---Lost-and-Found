@@ -99,6 +99,7 @@ export default function ViewPost() {
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.id]: e.target.value });
   };
+  
   useEffect(() => {
     const fetchPosts = async () => {
       try {

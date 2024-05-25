@@ -1,6 +1,9 @@
+import { Icon } from "@iconify-icon/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import Wrapper from "./Wrapper";
 
 export default function ViewUser() {
   const [userDetails, setUserDetails] = useState([]);
@@ -20,7 +23,7 @@ export default function ViewUser() {
 
   console.log(userDetails);
   return (
-    <div>
+    <Wrapper>
       <h3>Users</h3>
 
       <Table responsive bordered hover size="lg">
@@ -38,7 +41,7 @@ export default function ViewUser() {
         </thead>
         <tbody>
             {userDetails.map((userDetail)=>(
-              <tr key={userDetail.name}>
+              <tr key={userDetail.user_id}>
                 <td>{userDetail.user_id}</td>
                 <td>{userDetail.user_firstname}</td>
                 <td>{userDetail.user_lastname}</td>
@@ -47,16 +50,21 @@ export default function ViewUser() {
                 <td>{userDetail.created_at}</td>
                 <td>{userDetail.role}</td>
                 <td>
-                  <div>
-                    View
-                    delete
-                  </div>
+                <Link to={`/admin/users/${userDetail.user_id}`} className="text-decoration-none text-success">
+                      <Icon icon="tabler:edit" /> Edit
+                    </Link>
+                    <Link
+                      className="text-decoration-none text-danger"
+                      // onClick={() => handleModal(item.id)}
+                    >
+                      <Icon icon="fluent:delete-24-regular" /> Delete
+                    </Link>
                 </td>
               </tr>
             ))}
         
         </tbody>
       </Table>
-    </div>
+    </Wrapper>
   );
 }

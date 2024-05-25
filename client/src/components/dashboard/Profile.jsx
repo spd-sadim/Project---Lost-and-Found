@@ -4,6 +4,8 @@ import { AuthContext } from "../../context/AuthContext";
 import {Col} from "react-bootstrap"
 import axios from 'axios';
 import { useNavigate } from "react-router";
+import Wrapper from "./Wrapper";
+import FormWrapper from "./FormWrapper";
 
 export default function Profile() {
   const { user, dispatch } = useContext(AuthContext);
@@ -30,7 +32,7 @@ export default function Profile() {
       alert('Profile updated successfully');
     } catch (err) {
       console.error("Error updating profile", err);
-      alert('An error occurred while updating the profile');
+      alert(err);
     }
   }
 
@@ -42,9 +44,9 @@ export default function Profile() {
 
   console.log(user);
   return (
-    <div className="px-lg-5">
+    <Wrapper>
       <h3 className="fw-bol py-3">Edit profile</h3>
-      <div className="form-wrapper px-4 py-3 rounded border bg-white">
+      <FormWrapper>
         <h4 className="py-3">My profile</h4>
         <form onSubmit={handleProfileSave}>
         <div className="row gy-3">
@@ -91,7 +93,7 @@ export default function Profile() {
         <button type="button" onClick={handleLogout} className="btn btn-danger mt-3 py-2">Logout</button>
         </div>
         </form>
-      </div>
-    </div>
+      </FormWrapper>
+    </Wrapper>
   );
 }
