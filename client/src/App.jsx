@@ -17,6 +17,7 @@ import ViewPost from "./pages/view-post/ViewPost";
 import { foundInputField, lostInputField } from "./utils/utils";
 import Profile from "./components/dashboard/Profile";
 import ViewUser from "./components/dashboard/ViewUser";
+import DetailedUsers from "./components/dashboard/DetailedUsers";
 
 
 export default function App() {
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="/admin/profile" element={<Profile />} />
           <Route path="/admin/found" element={<ViewItem type='found'/>} />
           <Route path="/admin/users" element={<ViewUser />} />
+          <Route path="/admin/users/:id" element={<DetailedUsers />} />
           <Route path="/admin/found/:id" element={<DetailedView />} />
           <Route path="/admin/found/create" element={<AddItem addInputField={foundInputField} endpoint={'/api/found/create'} title="Found" />} />
           <Route path="/admin/lost" element={<ViewItem type='lost'/>} />
