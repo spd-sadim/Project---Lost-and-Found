@@ -1,6 +1,6 @@
 import pool from "../db.js";
 
-export const getPosts = async(req, res)=>{
+export const getPosts = async(req, res, next)=>{
     const { category, status, date, location, keywords } = req.query;
 
     let query = 'SELECT * FROM lost_posts WHERE 1 = 1'; // Base query for lost posts
@@ -24,12 +24,12 @@ export const getPosts = async(req, res)=>{
         res.json(allPosts);
     } catch (error) {
         console.error('Error fetching posts:', error);
-        res.status(500).send(error.message);
+       next(error)
     }
 }
 
 
-export const getAllPost = async(req, res)=>{
+export const getAllPost = async(req, res, next)=>{
     try {
         const foundPost = await pool.query('SELECT * FROM found_posts');
         const lostPost = await pool.query('SELECT * FROM lost_posts');
@@ -37,6 +37,6 @@ export const getAllPost = async(req, res)=>{
         const allPost = [...foundPost.rows, ...lostPost.rows];
         res.status(200).json(allPost);
     } catch (err) {
-        res.status(500).json(err);
+        next(err)
     }
 }
