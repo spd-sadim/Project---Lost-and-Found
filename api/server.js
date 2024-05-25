@@ -6,6 +6,9 @@ import authRoutes from "./routes/auth.route.js";
 import postRoutes from "./routes/post.route.js";
 import inquiryRoutes from "./routes/inquiry.route.js";
 import cookieParser from "cookie-parser";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const port = 3000;
