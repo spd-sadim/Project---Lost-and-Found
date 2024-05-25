@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import image from "../assets/samsung.jpg";
 import { useParams } from "react-router";
 import { Icon } from "@iconify-icon/react";
 import axios from "axios";

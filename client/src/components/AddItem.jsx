@@ -6,6 +6,7 @@ import { categories } from "./category";
 import { personInputField } from "../utils/utils";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import Wrapper from "./dashboard/Wrapper";
 
 export default function AddItem({ addInputField, title, endpoint }) {
   const [image, setImage] = useState(null);
@@ -69,7 +70,7 @@ export default function AddItem({ addInputField, title, endpoint }) {
     }
   };
   return (
-    <div className="px-lg-5">
+    <Wrapper>
       <h4 className="py-3">
         Create <span>{title}</span> Post
       </h4>
@@ -191,6 +192,6 @@ export default function AddItem({ addInputField, title, endpoint }) {
           </button>
         </div>
       </form>
-    </div>
+    </Wrapper>
   );
 }

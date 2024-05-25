@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import Wrapper from "./dashboard/Wrapper";
 
 export default function ViewItem({ type }) {
   const [show, setShow] = useState(false);
@@ -54,7 +55,7 @@ export default function ViewItem({ type }) {
   };
 
   return (
-    <div className="px-lg-5">
+    <Wrapper>
       <div className=" d-flex justify-content-between w-100 my-3">
         <h4 className="">View {type} Items</h4>
         <button className="btn btn-dark">+ New Item</button>
@@ -142,6 +143,6 @@ export default function ViewItem({ type }) {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </Wrapper>
   );
 }
