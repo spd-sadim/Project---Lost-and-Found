@@ -19,6 +19,7 @@ export default function Sidebar({ isCollapse }) {
     e.stopPropagation();
   };
 
+  const linkStyle = "text-decoration-none text-color px-2 py-1 sidebar-links";
   const adminLinks = [
     {
       id: 2,
@@ -89,38 +90,24 @@ export default function Sidebar({ isCollapse }) {
         },
       ],
     },
-    {
-      id: 6,
-      name: "Users",
-      icon: <Icon icon="clarity:notification-solid" />,
-      subLinks: [
-        {
-          id: 2,
-          subName: "Users",
-          subRoute: "/users",
-        },
-      ],
-    },
-    {
-      id: 7,
-      name: "Dummy2",
-      icon: <Icon icon="clarity:notification-solid" />,
-      subLinks: [
-        {
-          id: 1,
-          subName: "Lost Notification",
-          subRoute: "/lost/notification",
-        },
-        {
-          id: 2,
-          subName: "Found Notification",
-          subRoute: "/found/notification",
-        },
-      ],
-    },
   ];
 
   // const userLinks = adminLinks.filter((item) => item.id < 6);
+
+  const links = [
+    {
+      id: 6,
+      name: "Users",
+      icon: <Icon icon="mdi:users-outline" />,
+      route: "/users",
+    },
+    {
+      id: 7,
+      name: "Message",
+      icon: <Icon icon="ep:message-box" />,
+      route: "/inquiry",
+    },
+  ];
 
   const items =
     user.role === "admin"
@@ -128,65 +115,82 @@ export default function Sidebar({ isCollapse }) {
       : adminLinks.filter((link) => link.id < 6);
 
   return (
-    <aside
-      className={`sidebar-container  ${
-        isCollapse ? "collapsed" : ""
-      }`}
-    >
-    <div className="vh-100 position-sticky top-0">
-      <div className="sidebar-links px-3">
-        <ul className="d-flex flex-column gap-1 list-unstyled">
-          <Link
-            to="/"
-            className="text-decoration-none text-color px-2 py-1 sidebar-links"
-          >
-            <li>View site</li>
-          </Link>
-          {items.map((item) => (
-            <li
-              key={item.id}
-              className={` sidebar-links px-2 py-1 pointer ${
-                activeDropdown === item.id ? "text-white" : "text-color"
-              } `}
-              onClick={() => {
-                handleDropDown(item.id);
-              }}
+    <aside className={`sidebar-container  ${isCollapse ? "collapsed" : ""}`}>
+      <div className="vh-100 position-sticky top-0">
+        <div className="sidebar-links px-3">
+          <ul className="d-flex flex-column gap-1 list-unstyled">
+            <Link
+              to="/"
+              className="text-decoration-none text-color px-2 py-1 sidebar-links"
             >
-              <span className="d-flex justify-content-between align-items-center">
-                <span>
-                  {item.icon} {item.name}
-                </span>
-                <Icon
-                  icon="ep:arrow-down-bold"
-                  style={{
-                    transform: `rotate(${
-                      activeDropdown === item.id ? "-180deg" : "0"
-                    })`,
-                    transition: "all .2s ease-in",
-                  }}
-                />
-              </span>
-
-              <ul
-                className={`list-unstyled px-3 ${
-                  activeDropdown === item.id ? "d-block" : "d-none"
+              <li>View site</li>
+            </Link>
+            {items.map((item) => (
+              <li
+                key={item.id}
+                className={` sidebar-links px-2 py-1 pointer ${
+                  activeDropdown === item.id ? "text-white" : "text-color"
                 } `}
+                onClick={() => {
+                  handleDropDown(item.id);
+                }}
               >
-                {item.subLinks.map((subLink) => (
+                <span className="d-flex justify-content-between align-items-center">
+                  <span>
+                    {item.icon} {item.name}
+                  </span>
+                  <Icon
+                    icon="ep:arrow-down-bold"
+                    style={{
+                      transform: `rotate(${
+                        activeDropdown === item.id ? "-180deg" : "0"
+                      })`,
+                      transition: "all .2s ease-in",
+                    }}
+                  />
+                </span>
+
+                <ul
+                  className={`list-unstyled px-3 ${
+                    activeDropdown === item.id ? "d-block" : "d-none"
+                  } `}
+                >
+                  {item.subLinks.map((subLink) => (
+                    <Link
+                      to={`/${user.role}${subLink.subRoute}`}
+                      className="text-decoration-none text-color sidebar-links"
+                      key={subLink.id}
+                      onClick={handleSubLinkClick}
+                    >
+                      <li className="my-2"> {subLink.subName}</li>
+                    </Link>
+                  ))}
+                </ul>
+              </li>
+            ))}
+            {user.role === "admin"
+              ? links.map((link) => (
                   <Link
-                    to={`/${user.role}${subLink.subRoute}`}
-                    className="text-decoration-none text-color sidebar-links"
-                    key={subLink.id}
-                    onClick={handleSubLinkClick}
+                    key={link.id}
+                    to={`/admin${link.route}`}
+                    className={linkStyle}
+                    onClick={() => {
+                      handleDropDown(link.id);
+                    }}
                   >
-                    <li className="my-2"> {subLink.subName}</li>
+                    <li
+                      className={`d-flex gap-1 w-100 h-100 align-items-center ${
+                        activeDropdown === link.id ? "text-white" : "text-color"
+                      }`}
+                    >
+                      <span className="mt-1">{link.icon}</span>
+                      <span>{link.name}</span>
+                    </li>
                   </Link>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </div>
+                ))
+              : null}
+          </ul>
+        </div>
       </div>
     </aside>
   );
