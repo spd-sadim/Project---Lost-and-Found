@@ -1,17 +1,19 @@
 import { Icon } from "@iconify-icon/react";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Wrapper from "./Wrapper";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function ViewUser() {
+  const {user} = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("/api/user/");
+        const response = await axios.get(`/api/user?id=${user.user_id}`);
         console.log(response.data);
         setUserDetails(response.data);
       } catch (err) {
