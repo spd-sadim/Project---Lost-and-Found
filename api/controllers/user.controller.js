@@ -3,7 +3,7 @@ import { errorHandler } from "../utils/error.js";
 
 export const getUsers = async (req, res, next) => {
   try {
-    const result = await pool.query("SELECT * FROM users");
+    const result = await pool.query("SELECT * FROM users WHERE NOT user_id = $1", [req.query.id]);
     const santizedUsers = santizedUserData(result.rows);
     res.json(santizedUsers);
   } catch (err) {
