@@ -18,6 +18,7 @@ import { foundInputField, lostInputField } from "./utils/utils";
 import Profile from "./components/dashboard/Profile";
 import ViewUser from "./components/dashboard/ViewUser";
 import DetailedUsers from "./components/dashboard/DetailedUsers";
+import Inquiry from "./components/dashboard/Inquiry";
 
 
 export default function App() {
@@ -58,6 +59,7 @@ export default function App() {
           <Route path="/admin/lost" element={<ViewItem type='lost'/>} />
           <Route path="/admin/lost/:id" element={<DetailedView />} />
           <Route path="/admin/lost/create" element={<AddItem addInputField={lostInputField} endpoint={'/api/lost/create'} title="Lost" />}  />
+          <Route path="/admin/inquiry" element={<Inquiry />} />
         </Route>
         </Route>
         {/* 404 not found */}
