@@ -54,6 +54,54 @@ export const getAllFoundPost = async(req, res, next) => {
 }
 
 
+export const updateFoundPostById = async (req, res, next) => {
+    const {item_name, location, date, additional_info, category_id, image = null} = req.body;
+    const newImage = req.file ? req.file.filename : image;
+    const updatedData = {
+      item_name,
+      location,
+      date,
+      additional_info,
+      category_id,
+      image: newImage,
+    };
+    const { id } = req.params;
+    const query = `
+      UPDATE found_posts
+      SET
+        item_name = $1,
+        location = $2,
+        date = $3,
+        additional_info = $4,
+        category_id = $5,
+        image = $6
+      WHERE id = $7
+      RETURNING *;
+    `;
+    const values = [
+      updatedData.item_name,
+      updatedData.location,
+      updatedData.date,
+      updatedData.additional_info,
+      updatedData.category_id,
+      updatedData.image,
+      id,
+    ];
+    try {
+      const result = await pool.query(query, values);
+      const updatedPost = result.rows[0];
+      res.status(200).json({
+        message: 'Post updated successfully',
+        data: updatedPost,
+      });
+    } catch (err) {
+      console.error('Error executing code', err);
+      next(err);
+    }
+  
+  };
+
+
 export const deleteFoundPost = async (req, res)=>{
     try{
         console.log(req.params.id);
