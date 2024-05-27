@@ -39,15 +39,15 @@ export default function Inquiry() {
         </thead>
         <tbody>
             {inquires.map((inquiry)=>(
-              <tr key={inquiry.id}>
+              <tr key={inquiry.id} >
                 <td>{inquiry.fullname}</td>
                 <td>{inquiry.contact}</td>
                 <td>{inquiry.email}</td>
                 <td>{inquiry.message}</td>
                 <td>{inquiry.created_at}</td>
                 <td>
-                <Link to={`/admin/inquiry/${inquiry.id}`} className="text-decoration-none text-success">
-                      <Icon icon="tabler:edit" /> Edit
+                <Link to={`/admin/inquiry/${inquiry.id}`} className="text-decoration-none text-secondary">
+                      <Icon icon="tabler:edit" /> View
                     </Link>
                     <Link
                       className="text-decoration-none text-danger"
