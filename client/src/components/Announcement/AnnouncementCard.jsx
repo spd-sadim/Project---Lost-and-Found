@@ -24,7 +24,7 @@ export default function AnnouncementCard({ item }) {
       </span>
       <Card.Body>
         <Card.Title>
-          <div className="d-flex fw-bold">
+          <div className="d-flex fw-semibold">
            {item.item_name}
           </div>
         </Card.Title>
