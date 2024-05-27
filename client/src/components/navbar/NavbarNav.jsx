@@ -20,9 +20,6 @@ export default function NavbarNav() {
             <Nav.Link href="/" className="fw-bold">
               Home
             </Nav.Link>
-            <Nav.Link href="/about-us" className="fw-bold">
-              About us
-            </Nav.Link>
             <Nav.Link href="/report-item" className="fw-bold">
               Report Item
             </Nav.Link>
