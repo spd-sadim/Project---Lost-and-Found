@@ -1,6 +1,6 @@
 import Table from "react-bootstrap/Table";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -12,6 +12,7 @@ export default function ViewItem({ type }) {
   const [show, setShow] = useState(false);
   const [items, setItems] = useState([]);
   const [deleteId, setDeleteId] = useState(null);
+  const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
   const handleModal = (id) => {
@@ -49,10 +50,17 @@ export default function ViewItem({ type }) {
     if (deleteId) {
       deletePost(deleteId);
     } else {
-      
       alert("Something went wrong");
     }
   };
+
+  const handleRowClick = (id) => {
+    navigate(`/${user.role}/${type}/${id}?type=${type}`);
+  };
+  
+  const handleEditClick = (id)=>{
+    navigate(`/${user.role}/${type}/edit/${id}?type=${type}`)
+  }
 
   return (
     <Wrapper>
@@ -76,7 +84,11 @@ export default function ViewItem({ type }) {
         <tbody>
           {items.length > 0 ? (
             items.map((item) => (
-              <tr key={item.id}>
+              <tr
+                key={item.id}
+                onClick={() => handleRowClick(item.id)}
+                className="pointer"
+              >
                 <td>{item.id}</td>
                 <td>
                   <img
@@ -96,19 +108,28 @@ export default function ViewItem({ type }) {
                 </td>
                 <td>
                   <div className="d-flex gap-2 justify-content-center">
-                    <Link
-                      to={`/${user.role}/lost/${item.id}?type=${type}`}
+                    {/* <Link
+                      to={`/${user.role}/${type}/${item.id}?type=${type}`}
                       className="text-decoration-none"
                     >
                       <Icon icon="lets-icons:view-alt" />
                       View
-                    </Link>
-                    <Link className="text-decoration-none text-success">
+                    </Link> */}
+                    <div
+                      className="text-decoration-none text-primary"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEditClick(item.id);
+                      }}
+                    >
                       <Icon icon="tabler:edit" /> Edit
-                    </Link>
+                    </div>
                     <Link
                       className="text-decoration-none text-danger"
-                      onClick={() => handleModal(item.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleModal(item.id);
+                      }}
                     >
                       <Icon icon="fluent:delete-24-regular" /> Delete
                     </Link>
