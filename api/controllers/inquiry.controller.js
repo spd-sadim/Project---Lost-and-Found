@@ -27,3 +27,16 @@ export const getInquiry = async (req, res, next) => {
     next(err);
   }
 };
+
+//get inquriy by id
+export const getInquiryById = async (req, res, next) => {
+  const {id} = req.params;
+  try {
+    const result = await pool.query("SELECT * FROM inquirylist WHERE id = $1", [id]);
+    if (result.rows.length === 0)
+      return next(errorHandler(404, "No inquiry message"));
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
+};
