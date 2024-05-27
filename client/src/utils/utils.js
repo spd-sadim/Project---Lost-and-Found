@@ -2,7 +2,7 @@ export const lostInputField = [
     {
       id: 1,
       type: "text",
-      name: 'name',
+      name: 'item_name',
       placeholder: "What was lost",
       label: "What was lost?",
     },
@@ -25,7 +25,7 @@ export const lostInputField = [
     {
       id: 1,
       type: "text",
-      name: 'name',
+      name: 'item_name',
       placeholder: "What was found",
       label: "What was found?",
     },
