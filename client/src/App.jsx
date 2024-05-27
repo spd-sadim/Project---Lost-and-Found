@@ -19,6 +19,8 @@ import Profile from "./components/dashboard/Profile";
 import ViewUser from "./components/dashboard/ViewUser";
 import DetailedUsers from "./components/dashboard/DetailedUsers";
 import Inquiry from "./components/dashboard/Inquiry";
+import EditPost from "./components/dashboard/EditPost";
+import InquiryDetails from "./components/dashboard/InquiryDetails";
 
 
 export default function App() {
@@ -40,6 +42,8 @@ export default function App() {
         <Route path="/user" element={<Dashboard />}>
           <Route path="/user/found" element={<ViewItem type='found'/>} />
           <Route path="/user/found/:id" element={<DetailedView />} />
+          <Route path="/user/found/edit/:id" element={<EditPost addInputField={foundInputField}/>}  title="Found" />
+          <Route path="/user/lost/edit/:id" element={<EditPost addInputField={lostInputField}  title="Lost" />} />
           <Route path="/user/profile" element={<Profile />} />
           <Route path="/user/found/create" element={<AddItem addInputField={foundInputField} endpoint={'/api/found/create'} title="Found" />} />
           <Route path="/user/lost" element={<ViewItem type='lost'/>} />
@@ -51,6 +55,8 @@ export default function App() {
         <Route element={<PrivateRoute allowedRoles={"admin"} />}>
         <Route path="/admin" element={<Dashboard />} > 
           <Route path="/admin/profile" element={<Profile />} />
+          <Route path="/admin/found/edit/:id" element={<EditPost addInputField={foundInputField}/>}  title="Found" />
+          <Route path="/admin/lost/edit/:id" element={<EditPost addInputField={lostInputField}/>}  title="Found" />
           <Route path="/admin/found" element={<ViewItem type='found'/>} />
           <Route path="/admin/users" element={<ViewUser />} />
           <Route path="/admin/users/:id" element={<DetailedUsers />} />
@@ -60,6 +66,7 @@ export default function App() {
           <Route path="/admin/lost/:id" element={<DetailedView />} />
           <Route path="/admin/lost/create" element={<AddItem addInputField={lostInputField} endpoint={'/api/lost/create'} title="Lost" />}  />
           <Route path="/admin/inquiry" element={<Inquiry />} />
+          <Route path="/admin/inquiry/:id" element={<InquiryDetails />} />
         </Route>
         </Route>
         {/* 404 not found */}
