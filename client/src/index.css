@@ -10,6 +10,9 @@
   --list-button-color1: #FF282C;
   --list-button-color2: #FF4E51;
   --list-font-secondary: #7a7c93;
+  --background-gradient: linear-gradient(178deg, #ffff33 10%, #3333ff);
+  --gray: #34495e;
+  --darkgray: #2c3e50;
 }
 
 * {
@@ -20,6 +23,50 @@
   scroll-behavior: smooth;
   scrollbar-width: thin;
 }
+
+.selectOptions {
+  /* Reset Select */
+  appearance: none;
+  outline: 10px red;
+  border: 0;
+  box-shadow: none;
+  /* Personalize */
+  flex: 1;
+  padding: 0 1em;
+  color: #fff;
+  background-color: var(--darkgray);
+  background-image: none;
+  cursor: pointer;
+}
+/* Remove IE arrow */
+.selectOptions::-ms-expand {
+  display: none;
+}
+/* Custom Select wrapper */
+.selectOptions {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  border-radius: .25em;
+  overflow: hidden;
+}
+/* Arrow */
+.selectOptions::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1em;
+  background-color: #34495e;
+  transition: .25s all ease;
+  pointer-events: none;
+}
+/* Transition */
+.selectOptions:hover::after {
+  color: #f39c12;
+}
+
 
 /* btn style */
 .primary-color {
@@ -112,3 +159,4 @@
 .fw-semibold{
   font-weight: 600;
 }
+
