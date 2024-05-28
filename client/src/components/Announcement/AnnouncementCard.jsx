@@ -1,5 +1,6 @@
 import Card from "react-bootstrap/Card";
 import { Icon } from "@iconify-icon/react";
+import { Link } from "react-router-dom";
 
 export default function AnnouncementCard({ item }) {
   return (
@@ -37,12 +38,15 @@ export default function AnnouncementCard({ item }) {
           <Icon icon="lets-icons:date-today-light" className="font-sec" width="25" height="25" /> {item.date}{" "}
           </span>
         </Card.Text>
+        <Link to={`/view/${item.id}?type=${item.type}`}>
         <button
           type="button"
           className="myBtn-primary px-3 py-1 rounded text-white fw-bold"
         >
           Details
         </button>
+        </Link>
+
       </Card.Body>
     </Card>
   );
