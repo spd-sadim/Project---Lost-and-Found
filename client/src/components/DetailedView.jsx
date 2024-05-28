@@ -45,13 +45,14 @@ export default function DetailedView() {
         console.error('Error fetching item details:', error);
       });
   }, [type, id]);
-console.log(item[0]);
   return (
     <div>
       <Container>
         <Row>
           <Col lg={4} md={5}>
+          <div className="w-100 h-100 d-flex align-items-center justify-content-center">
             <img src={`http://localhost:3000/Images/${item.image}`} alt="item image" className="img-fluid rounded" />
+          </div>
           </Col> 
           <Col lg={8} md={7}>
             <button>status</button>
