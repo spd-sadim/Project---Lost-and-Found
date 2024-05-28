@@ -4,23 +4,25 @@ import { categories } from "../../components/category";
 import NavbarNav from "../../components/navbar/NavbarNav";
 import axios from "axios";
 import AnnouncementCard from "../../components/Announcement/AnnouncementCard";
+import {  useSearchParams } from "react-router-dom";
 
-const Filter = ({ handleChange }) => {
+const Filter = ({ handleChange, categoryParam }) => {
   return (
     <div className="filters d-flex flex-column gap-4">
       <div className="d-flex justify-content-between">
         <h3>Filter</h3>
-        <input type="reset" value="clear" className="border-0 bg-white" />
+        <input type="button" value="clear" className="border-0 bg-white" />
+        {/* <Link to='/view-post' className='text-decoration-none'>clear</Link> */}
       </div>
       <div className="filter-category">
         <select
           name="category"
           id="category"
           className="p-2 w-100 border"
-          defaultValue={"choose"}
+          defaultValue={categoryParam || ""}
           onChange={handleChange}
         >
-          <option disabled hidden value="choose">
+          <option  value="">
             Please choose{" "}
           </option>
           {categories.map((category, index) => (
@@ -39,8 +41,8 @@ const Filter = ({ handleChange }) => {
           onChange={handleChange}
         >
           <option value="">All</option>
-          <option value="found">Found</option>
-          <option value="lost">Lost</option>
+          <option value='found'>Found</option>
+          <option value='lost'>Lost</option>
         </select>
       </div>
 
@@ -54,63 +56,46 @@ const Filter = ({ handleChange }) => {
           onChange={handleChange}
         />
       </div>
-      <div className="filter-keywords">
-        <input
-          type="text"
-          className="p-2 w-100 border"
-          name="keywords"
-          id="keywords"
-          placeholder="Enter keyword"
-          onChange={handleChange}
-        />
-      </div>
       <button
         style={{ backgroundColor: "#cf2e2e" }}
-        className="p-3 border-0 rounded fw-bold"
-        onClick={console.log("apply ")}
+        className="p-3 border-0 rounded fw-bold text-white"
+        onClick={handleChange} // Call handleChange function to apply filters
       >
         Apply Filters
       </button>
     </div>
   );
 };
+
 export default function ViewPost() {
   const [posts, setPosts] = useState([]);
+  const [searchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category');
+  
+  console.log(categoryParam);
   const [filters, setFilters] = useState({
-    category: "",
+    // category: searchParams.get('category') || "",
+    category : categoryParam || "",
     status: "",
-    date: "",
     location: "",
-    keywords: "",
   });
-  //   useEffect(() => {
-  //     const fetchPosts = async () => {
-  //         try {
-  //             const response = await axios.get('/api/posts/', { params: filters });
-  //             setPosts(response.data);
-  //         } catch (error) {
-  //             console.error('Error fetching posts:', error);
-  //         }
-  //     };
-  //     fetchPosts();
-  // }, [filters]);
 
-  // console.log(filters);
-  const handleFilterChange = (e) => {
-    setFilters({ ...filters, [e.target.id]: e.target.value });
-  };
+  
+  console.log(filters)
   
   useEffect(() => {
-    const fetchPosts = async () => {
+    
+    const handleFilterChange = async () => {
       try {
-        const response = await axios.get("/api/posts/all");
+        const response = await axios.get("/api/posts", { params: filters });
+        console.log(filters)
         setPosts(response.data);
       } catch (err) {
         console.log(err);
       }
     };
-    fetchPosts();
-  }, []);
+    handleFilterChange(); 
+  }, [filters]); 
 
   return (
     <div>
@@ -125,22 +110,28 @@ export default function ViewPost() {
           </section>
           <Row>
             <Col lg="3">
-              <Filter handleChange={handleFilterChange} />
+              <Filter categoryParam={categoryParam} handleChange={(e) => {
+                const { id, value } = e.target;
+                setFilters({ ...filters, [id]: value });
+              }} />
             </Col>
             <Col lg="9">
               <div className="py-2">
-                <p>Showing 1-10 of 12 Results</p>
+                <p>Showing {posts.length} Results</p>
               </div>
               <Container>
                 <div className="row gx-2 gy-3">
-                {
-                  posts.map((post, index)=>(
-                    <Col md={4} key={index}>
-                      <AnnouncementCard item={post}/>
+                  {posts.length > 0 ? (
+                    posts.map((post, index) => (
+                      <Col md={4} key={index}>
+                        <AnnouncementCard item={post} />
+                      </Col>
+                    ))
+                  ) : (
+                    <Col>
+                      <span>No result</span>
                     </Col>
-                  ))
-                }
-                
+                  )}
                 </div>
               </Container>
             </Col>
