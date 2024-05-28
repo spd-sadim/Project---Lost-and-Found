@@ -1,21 +1,24 @@
-// import { useLocation } from "react-router";
-import { useSearchParams } from "react-router-dom";
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function ReportItem() {
-    const [searchParams] = useSearchParams()
-    const statusValue = searchParams.get("value");
-    console.log(statusValue);
-//     const { search } = useLocation();
-//   const queryParams = new URLSearchParams(search);
-//   const buttonValue = queryParams.get("value");
-//   console.log(buttonValue);
+  const {user} = useContext(AuthContext)
+  const navigate = useNavigate();
 
-  return <div className="pt-5 mt-5">ReportItem
-  <p>{statusValue}</p>
-  <select name="category" id="" defaultValue={statusValue}>
-    <option value="">selected</option>
-    <option value="Found">Found </option>
-    <option value="Lost">Lost </option>
-  </select>
-  </div>;
+  useEffect(() => {
+    if (user && user.role) {
+      if (user.role === 'user') {
+        navigate('/user/lost/create');
+      } else if (user.role === 'admin') {
+        navigate('/admin/lost/create');
+      } else {
+        navigate('/login');
+      }
+    } else {
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
+  return null;
 }
