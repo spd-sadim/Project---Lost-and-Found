@@ -1,32 +1,132 @@
 import pool from "../db.js";
 
-export const getPosts = async(req, res, next)=>{
-    const { category, status, date, location, keywords } = req.query;
+// export const getPosts = async (req, res, next) => {
+//     const { category, status, date, location, keywords } = req.query;
+  
+//     let lostPostsQuery = 'SELECT * FROM lost_posts WHERE 1 = 1';
+//     let foundPostsQuery = 'SELECT * FROM found_posts WHERE 1 = 1';
+  
+//     const values = [];
+  
+//     if (category) {
+//       lostPostsQuery += ` AND category_id = $${values.push(category)}`;
+//       foundPostsQuery += ` AND category_id = $${values.length}`;
+//     }
+  
+//     // if (status) {
+//     //   lostPostsQuery += ` AND status = $${values.push(status)}`;
+//     //   foundPostsQuery += ` AND status = $${values.length}`;
+//     // }
+//     if (status === 'lost') {
+//         lostPostsQuery += ' ORDER BY date DESC'; // Example order by date
+//       } else if (status === 'found') {
+//         foundPostsQuery += ' ORDER BY date DESC'; // Example order by created_at
+//       }
+  
+//     if (date) {
+//       lostPostsQuery += ` AND created_at::date = $${values.push(date)}`;
+//       foundPostsQuery += ` AND created_at::date = $${values.length}`;
+//     }
+  
+//     if (location) {
+//       lostPostsQuery += ` AND location ILIKE $${values.push(`%${location}%`)}`;
+//       foundPostsQuery += ` AND location ILIKE $${values.length}`;
+//     }
+  
+//     if (keywords) {
+//       lostPostsQuery += ` AND description ILIKE $${values.push(`%${keywords}%`)}`;
+//       foundPostsQuery += ` AND description ILIKE $${values.length}`;
+//     }
 
-    let query = 'SELECT * FROM lost_posts WHERE 1 = 1'; // Base query for lost posts
+//     try {
+//         let allPosts = [];
+  
+//         if (status === 'lost') {
+//           const lostPosts = await pool.query(lostPostsQuery, values);
+//           allPosts = lostPosts.rows;
+//         } else if (status === 'found') {
+//           const foundPosts = await pool.query(foundPostsQuery, values);
+//           allPosts = foundPosts.rows;
+//         } else {
+//           const allLostPosts = await pool.query(lostPostsQuery);
+//           const allFoundPosts = await pool.query(foundPostsQuery);
+  
+//           allPosts = [...allLostPosts.rows, ...allFoundPosts.rows];
+//         }
+        
+//         res.json(allPosts);
+  
+//     // try {
+//     //   const lostPosts = await pool.query(lostPostsQuery, values);
+//     //   const foundPosts = await pool.query(foundPostsQuery, values);
+  
+//     //   const allPosts = [...lostPosts.rows, ...foundPosts.rows];
+//     //   res.json(allPosts);
+//     } catch (error) {
+//       console.error('Error fetching posts:', error);
+//       next(error);
+//     }
+// };
 
-    if (category) query += ` AND category = '${category}'`;
-    if (status) query += ` AND status = '${status}'`;
-    if (date) query += ` AND date = '${date}'`;
-    if (location) query += ` AND location ILIKE '%${location}%'`;
-    if (keywords) query += ` AND description ILIKE '%${keywords}%'`;
+export const getPosts = async (req, res, next) => {
+    const { category, status, location } = req.query;
+  
+    let lostPostsQuery = 'SELECT * FROM lost_posts WHERE 1 = 1';
+    let foundPostsQuery = 'SELECT * FROM found_posts WHERE 1 = 1';
+  
+    const values = [];
+  
+    if (category) {
+      lostPostsQuery += ` AND category_id = $${values.push(category)}`;
+      foundPostsQuery += ` AND category_id = $${values.length}`;
+    }
+  
+    if (status) {
+      if (status === 'lost') {
+        lostPostsQuery += ' ORDER BY date DESC';
+      } else if (status === 'found') {
+        foundPostsQuery += ' ORDER BY date DESC';
+      }
+    }
+
+  
+    if (location) {
+      lostPostsQuery += ` AND location ILIKE $${values.push(`%${location}%`)}`;
+      foundPostsQuery += ` AND location ILIKE $${values.length}`;
+    }
+      
 
     try {
-        res.send(req.query)
-        const lostPosts = await pool.query(query);
+        let allPosts = [];
+  
+        if(category || status || location) {
+        if (status === 'lost') {
+          const lostPosts = await pool.query(lostPostsQuery, values);
+          allPosts = lostPosts.rows;
+        } else if (status === 'found') {
+          const foundPosts = await pool.query(foundPostsQuery, values);
+          allPosts = foundPosts.rows;
+        } else {
+          const allLostPosts = await pool.query(lostPostsQuery, values);
+          const allFoundPosts = await pool.query(foundPostsQuery, values);
+  
+          allPosts = [...allLostPosts.rows, ...allFoundPosts.rows];
+        } 
+    } else {
+            // If no filters are applied, fetch all posts
+            const allLostPosts = await pool.query(lostPostsQuery);
+            const allFoundPosts = await pool.query(foundPostsQuery);
+  
+            allPosts = [...allLostPosts.rows, ...allFoundPosts.rows];
+          }
         
-        // Repeat the process for found posts and merge the results
-        // (Alternatively, UNION ALL can be used if both tables have the same structure)
-        const foundPostsQuery = query.replace('lost_posts', 'found_posts');
-        const foundPosts = await pool.query(foundPostsQuery);
-
-        const allPosts = [...lostPosts.rows, ...foundPosts.rows];
         res.json(allPosts);
+  
     } catch (error) {
-        console.error('Error fetching posts:', error);
-       next(error)
+      console.error('Error fetching posts:', error);
+      next(error);
     }
-}
+};
 
 
 export const getAllPost = async(req, res, next)=>{
