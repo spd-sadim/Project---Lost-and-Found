@@ -21,6 +21,7 @@ import DetailedUsers from "./components/dashboard/DetailedUsers";
 import Inquiry from "./components/dashboard/Inquiry";
 import EditPost from "./components/dashboard/EditPost";
 import InquiryDetails from "./components/dashboard/InquiryDetails";
+import Item from "./pages/Item";
 
 
 export default function App() {
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="/report-item" element={<ReportItem />} />
         <Route path="/unauthorized" element={<UnAuthorized />} />
         <Route path="/view-post" element={<ViewPost />} />
+        <Route path="/view/:id" element={<Item><DetailedView /></Item>} />
         {/* user dashboard */}
         <Route element={<PrivateRoute allowedRoles={"user"}/>}>
         <Route path="/user" element={<Dashboard />}>
