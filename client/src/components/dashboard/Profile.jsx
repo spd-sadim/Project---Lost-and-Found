@@ -17,12 +17,12 @@ export default function Profile() {
     user_phonenumber: user.user_phonenumber,
     user_email: user.user_email,
   });
-// console.log(formData)
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  //update user credentials
   const handleProfileSave = async(e)=>{
     e.preventDefault();
     try {
@@ -36,10 +36,16 @@ export default function Profile() {
     }
   }
 
-  const handleLogout = () => {
-    dispatch({ type: "logout" });
-    localStorage.removeItem("user");
-    navigate('/login');
+  //fn to handle logout user
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get('/api/auth/signout');
+      dispatch({ type: "logout" });
+      localStorage.removeItem("user");
+      navigate('/login');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   console.log(user);
