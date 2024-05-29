@@ -75,7 +75,7 @@ export default function Login() {
           onChange={handleChange}
         />
         <button
-          type="button"
+          type="submit"
           className="p-3 rounded"
           style={{ backgroundColor: "#376679", color: "white" }}
           onClick={handleClick}

@@ -110,7 +110,7 @@ export default function SignUp() {
           onChange={handleChange}
         />
         <button
-          type="button"
+          type="submit"
           className="p-3 rounded"
           disabled={loading}
           style={{ backgroundColor: "#376679", color: "white" }}
