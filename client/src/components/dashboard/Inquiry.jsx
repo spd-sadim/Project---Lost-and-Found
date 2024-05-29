@@ -3,10 +3,38 @@ import { Table } from "react-bootstrap";
 import Wrapper from "./Wrapper";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import {Icon} from '@iconify-icon/react'
+import { Icon } from "@iconify-icon/react";
+import DeleteModal from "../modal/DeleteModal";
 
 export default function Inquiry() {
   const [inquires, setInquires] = useState([]);
+  const [show, setShow] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+
+  const handleModal = (id) => {
+    setDeleteId(id);
+    setShow(!show);
+    console.log(show);
+  };
+
+  const deleteInquiry = async (id) => {
+    try {
+      console.log("api id", id);
+      await axios.delete(`/api/inquiry/${id}`);
+      setInquires(inquires.filter((inquiry) => inquiry.id !== id));
+      setShow(false);
+    } catch (err) {
+      console.error("Error deleting item", err);
+    }
+  };
+
+  const handleDeleteItem = () => {
+    if (deleteId) {
+      deleteInquiry(deleteId);
+    } else {
+      alert("Something went wrong");
+    }
+  };
 
   useEffect(() => {
     const fetchInquiry = async () => {
@@ -16,7 +44,6 @@ export default function Inquiry() {
         setInquires(res.data);
       } catch (err) {
         console.error(err);
-        alert(err);
       }
     };
     fetchInquiry();
@@ -38,29 +65,43 @@ export default function Inquiry() {
           </tr>
         </thead>
         <tbody>
-            {inquires.map((inquiry)=>(
-              <tr key={inquiry.id} >
+          {inquires.length > 0 ? (
+            inquires.map((inquiry) => (
+              <tr key={inquiry.id}>
                 <td>{inquiry.fullname}</td>
                 <td>{inquiry.contact}</td>
                 <td>{inquiry.email}</td>
                 <td>{inquiry.message}</td>
                 <td>{inquiry.created_at}</td>
                 <td>
-                <Link to={`/admin/inquiry/${inquiry.id}`} className="text-decoration-none text-secondary">
-                      <Icon icon="tabler:edit" /> View
-                    </Link>
-                    <Link
-                      className="text-decoration-none text-danger"
-                      // onClick={() => handleModal(item.id)}
-                    >
-                      <Icon icon="fluent:delete-24-regular" /> Delete
-                    </Link>
+                  <Link
+                    to={`/admin/inquiry/${inquiry.id}`}
+                    className="text-decoration-none text-secondary"
+                  >
+                    <Icon icon="tabler:edit" /> View
+                  </Link>
+                  <Link
+                    className="text-decoration-none text-danger"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleModal(inquiry.id);
+                    }}
+                  >
+                    <Icon icon="fluent:delete-24-regular" /> Delete
+                  </Link>
                 </td>
               </tr>
-            ))}
-        
+            ))
+          ) : (
+              <tr colSpan="8" >There is no data</tr>
+          )}
         </tbody>
       </Table>
+      <DeleteModal
+        handleModal={handleModal}
+        handleDeleteItem={handleDeleteItem}
+        show={show}
+      />
     </Wrapper>
   );
 }

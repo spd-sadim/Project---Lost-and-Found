@@ -7,6 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import Wrapper from "./dashboard/Wrapper";
+import DeleteModal from "./modal/DeleteModal";
 
 export default function ViewItem({ type }) {
   const [show, setShow] = useState(false);
@@ -57,10 +58,10 @@ export default function ViewItem({ type }) {
   const handleRowClick = (id) => {
     navigate(`/${user.role}/${type}/${id}?type=${type}`);
   };
-  
-  const handleEditClick = (id)=>{
-    navigate(`/${user.role}/${type}/edit/${id}?type=${type}`)
-  }
+
+  const handleEditClick = (id) => {
+    navigate(`/${user.role}/${type}/edit/${id}?type=${type}`);
+  };
 
   return (
     <Wrapper>
@@ -140,14 +141,14 @@ export default function ViewItem({ type }) {
           ) : (
             <tr>
               {" "}
-              <td colSpan="7">There is no data</td>
+              <td colSpan="8">There is no data</td>
             </tr>
           )}
         </tbody>
       </Table>
 
-      {/* modal */}
-      <Modal
+      {/* modal to delete Item*/}
+      {/* <Modal
         show={show}
         onHide={handleModal}
         backdrop="static"
@@ -163,7 +164,13 @@ export default function ViewItem({ type }) {
             Yes
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
+
+      <DeleteModal
+        handleModal={handleModal}
+        handleDeleteItem={handleDeleteItem}
+        show={show}
+      />
     </Wrapper>
   );
 }

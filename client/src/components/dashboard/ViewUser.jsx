@@ -5,10 +5,38 @@ import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Wrapper from "./Wrapper";
 import { AuthContext } from "../../context/AuthContext";
+import DeleteModal from "../modal/DeleteModal";
 
 export default function ViewUser() {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState([]);
+  const [show, setShow] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+
+  const handleModal = (id) => {
+    setDeleteId(id);
+    setShow(!show);
+    console.log(show);
+  };
+
+  const deletePost = async (id) => {
+    try {
+      console.log("api id", id);
+      await axios.delete(`/api/user/${id}`);
+      setUserDetails(userDetails.filter((userDetail) => userDetail.user_id !== id));
+      setShow(false);
+    } catch (err) {
+      console.error("Error deleting item", err);
+    }
+  };
+
+  const handleDeleteItem = () => {
+    if (deleteId) {
+      deletePost(deleteId);
+    } else {
+      alert("Something went wrong");
+    }
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -21,7 +49,7 @@ export default function ViewUser() {
       }
     };
     fetchUsers();
-  },[]);
+  }, [user.user_id]);
 
   console.log(userDetails);
   return (
@@ -34,7 +62,7 @@ export default function ViewUser() {
             <th>User-ID</th>
             <th>First name</th>
             <th>Last name</th>
-            <th>Email address </th>
+            <th>Email address</th>
             <th>Phone Number</th>
             <th>Created at</th>
             <th>Role</th>
@@ -42,31 +70,42 @@ export default function ViewUser() {
           </tr>
         </thead>
         <tbody>
-            {userDetails.map((userDetail)=>(
-              <tr key={userDetail.user_id}>
-                <td>{userDetail.user_id}</td>
-                <td>{userDetail.user_firstname}</td>
-                <td>{userDetail.user_lastname}</td>
-                <td>{userDetail.user_email}</td>
-                <td>{userDetail.user_phonenumber}</td>
-                <td>{userDetail.created_at}</td>
-                <td>{userDetail.role}</td>
-                <td>
-                <Link to={`/admin/users/${userDetail.user_id}`} className="text-decoration-none text-success">
-                      <Icon icon="tabler:edit" /> Edit
-                    </Link>
-                    <Link
-                      className="text-decoration-none text-danger"
-                      // onClick={() => handleModal(item.id)}
-                    >
-                      <Icon icon="fluent:delete-24-regular" /> Delete
-                    </Link>
-                </td>
-              </tr>
-            ))}
-        
+          {userDetails.map((userDetail) => (
+            <tr key={userDetail.user_id}>
+              <td>{userDetail.user_id}</td>
+              <td>{userDetail.user_firstname}</td>
+              <td>{userDetail.user_lastname}</td>
+              <td>{userDetail.user_email}</td>
+              <td>{userDetail.user_phonenumber}</td>
+              <td>{userDetail.created_at}</td>
+              <td>{userDetail.role}</td>
+              <td>
+                <Link
+                  to={`/admin/users/${userDetail.user_id}`}
+                  className="text-decoration-none text-success"
+                >
+                  <Icon icon="tabler:edit" /> Edit
+                </Link>
+                <Link
+                  className="text-decoration-none text-danger"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleModal(userDetail.user_id);
+                  }}
+                >
+                  <Icon icon="fluent:delete-24-regular" /> Delete
+                </Link>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </Table>
+
+      <DeleteModal
+        handleModal={handleModal}
+        handleDeleteItem={handleDeleteItem}
+        show={show}
+      />
     </Wrapper>
   );
 }
