@@ -14,7 +14,6 @@ export default function Inquiry() {
   const handleModal = (id) => {
     setDeleteId(id);
     setShow(!show);
-    console.log(show);
   };
 
   const deleteInquiry = async (id) => {

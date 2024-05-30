@@ -22,6 +22,7 @@ import Inquiry from "./components/dashboard/Inquiry";
 import EditPost from "./components/dashboard/EditPost";
 import InquiryDetails from "./components/dashboard/InquiryDetails";
 import Item from "./pages/Item";
+import ChangePassword from "./components/dashboard/ChangePassword";
 
 
 export default function App() {
@@ -61,6 +62,7 @@ export default function App() {
           <Route path="/admin/lost/edit/:id" element={<EditPost addInputField={lostInputField}/>}  title="Found" />
           <Route path="/admin/found" element={<ViewItem type='found'/>} />
           <Route path="/admin/users" element={<ViewUser />} />
+          <Route path="/admin/change-password" element={<ChangePassword />} />
           <Route path="/admin/users/:id" element={<DetailedUsers />} />
           <Route path="/admin/found/:id" element={<DetailedView />} />
           <Route path="/admin/found/create" element={<AddItem addInputField={foundInputField} endpoint={'/api/found/create'} title="Found" />} />
