@@ -11,8 +11,7 @@ export default function ChangePassword() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit =  async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -26,15 +25,21 @@ export default function ChangePassword() {
       return;
     }
 
-
     try {
-      const result = axios.post("/api/user/change-password", {currentPassword, newPassword});
-      setSuccess("Updated Password succesfully");
+      const result = await axios.post("/api/user/change-password", {
+        currentPassword,
+        newPassword,
+      });
+      console.log()
+      setSuccess( result.data.message ||"Updated Password succesfully");
+      console.log(result);
     } catch (err) {
-      console.log(err);
-      setError(err);
+      if (err.response && err.response.data) {
+        setError(err.response.data.message || "An error occurred");
+      } else {
+        setError("An error occurred");
+      }
     }
-
   };
   return (
     <Wrapper>
@@ -47,20 +52,25 @@ export default function ChangePassword() {
             type="password"
             label="Current Password"
             value={currentPassword}
-            handleChange={(e)=> {setCurrentPassword(e.target.value)}}
+            handleChange={(e) => {
+              setCurrentPassword(e.target.value);
+            }}
           />
           <InputField
             type="password"
             label="New Password"
             value={newPassword}
-            handleChange={(e)=> {setNewPassword(e.target.value)}}
-
+            handleChange={(e) => {
+              setNewPassword(e.target.value);
+            }}
           />
           <InputField
             type="password"
             label="Verify Password"
             value={verifyPassword}
-            handleChange={(e)=> {setVerifyPassword(e.target.value)}}
+            handleChange={(e) => {
+              setVerifyPassword(e.target.value);
+            }}
           />
           <button type="submit" className="btn btn-secondary my-4">
             Update Password
