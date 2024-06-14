@@ -13,6 +13,7 @@ export default function HelpAdviceForm() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
+  const [success, setSuccess] = useState(undefined);
 
   const handleMessage = (e) => {
     setInquiry((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -20,10 +21,18 @@ export default function HelpAdviceForm() {
 
   const handleSubmitMessage = async (e) => {
     e.preventDefault();
+    setSuccess("");
     try {
       setIsLoading(true);
       const res = await axios.post("/api/inquiry/post", inquiry);
       setIsLoading(false);
+      setSuccess(res.data.message);
+      setInquiry({
+        fullname: "",
+        email: "",
+        number: "",
+        message: "",
+      });
     } catch (err) {
       console.log(err);
       setError(err);
@@ -39,6 +48,8 @@ export default function HelpAdviceForm() {
         <Col lg={6} md={6}>
           <div className="contact-form p-md-5">
             <form className="d-flex flex-column gap-2 py-md-5">
+          <h3 className="fw-bold">Help and advice</h3>
+            {success && <p className="text-success fw-bold">{success}</p>}
               <label htmlFor="fullname">
                 Full Name <b>*</b>
               </label>
@@ -48,6 +59,7 @@ export default function HelpAdviceForm() {
                 name="fullname"
                 className="inputField border-0 p-2"
                 required
+                value={inquiry.fullname}
                 placeholder='Eg: "Joe Sama'
                 onChange={handleMessage}
               />
@@ -61,6 +73,7 @@ export default function HelpAdviceForm() {
                 className="inputField border-0 p-2"
                 placeholder="youremail@example.com"
                 required
+                value={inquiry.email}
                 onChange={handleMessage}
               />
               <label htmlFor="phoneNumber">
@@ -71,6 +84,7 @@ export default function HelpAdviceForm() {
                 name="number"
                 id="phoneNumber"
                 className="inputField border-0 p-2"
+                value={inquiry.number}
                 maxLength={10}
                 placeholder="Phone Number"
                 required
@@ -83,7 +97,8 @@ export default function HelpAdviceForm() {
                 name="message"
                 id="message"
                 cols="20"
-                rows="8"
+                rows="2"
+                value={inquiry.message}
                 placeholder="Message"
                 className="inputField border-0 p-2"
                 onChange={handleMessage}
