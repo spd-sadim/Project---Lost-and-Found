@@ -72,7 +72,7 @@ export default function ViewUser() {
         <tbody>
           {userDetails.map((userDetail) => (
             <tr key={userDetail.user_id}>
-              <td>{userDetail.user_id}</td>
+              <td>{userDetail.user_id.slice(0,8) + "..."}</td>
               <td>{userDetail.user_firstname}</td>
               <td>{userDetail.user_lastname}</td>
               <td>{userDetail.user_email}</td>
