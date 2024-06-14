@@ -58,7 +58,6 @@ export default function Inquiry() {
             <th>Full Name</th>
             <th>Contact Details</th>
             <th>Email address </th>
-            <th>Message</th>
             <th>Created at</th>
             <th>Action</th>
           </tr>
@@ -70,7 +69,6 @@ export default function Inquiry() {
                 <td>{inquiry.fullname}</td>
                 <td>{inquiry.contact}</td>
                 <td>{inquiry.email}</td>
-                <td>{inquiry.message}</td>
                 <td>{inquiry.created_at}</td>
                 <td>
                   <Link
