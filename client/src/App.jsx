@@ -48,6 +48,7 @@ export default function App() {
           <Route path="/user/found/edit/:id" element={<EditPost addInputField={foundInputField}/>}  title="Found" />
           <Route path="/user/lost/edit/:id" element={<EditPost addInputField={lostInputField}  title="Lost" />} />
           <Route path="/user/profile" element={<Profile />} />
+          <Route path="/user/change-password" element={<ChangePassword />} />
           <Route path="/user/found/create" element={<AddItem addInputField={foundInputField} endpoint={'/api/found/create'} title="Found" />} />
           <Route path="/user/lost" element={<ViewItem type='lost'/>} />
           <Route path="/user/lost/:id" element={<DetailedView />} />
