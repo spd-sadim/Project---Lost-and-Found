@@ -117,7 +117,7 @@ export default function ViewItem({ type }) {
                       View
                     </Link> */}
                     <div
-                      className="text-decoration-none text-primary"
+                      className="text-decoration-none d-inline-flex align-items-center text-primary"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleEditClick(item.id);
@@ -126,7 +126,7 @@ export default function ViewItem({ type }) {
                       <Icon icon="tabler:edit" /> Edit
                     </div>
                     <Link
-                      className="text-decoration-none text-danger"
+                      className="text-decoration-none d-inline-flex align-items-center text-danger"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleModal(item.id);

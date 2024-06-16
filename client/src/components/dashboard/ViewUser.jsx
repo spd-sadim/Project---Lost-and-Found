@@ -23,7 +23,9 @@ export default function ViewUser() {
     try {
       console.log("api id", id);
       await axios.delete(`/api/user/${id}`);
-      setUserDetails(userDetails.filter((userDetail) => userDetail.user_id !== id));
+      setUserDetails(
+        userDetails.filter((userDetail) => userDetail.user_id !== id)
+      );
       setShow(false);
     } catch (err) {
       console.error("Error deleting item", err);
@@ -72,7 +74,7 @@ export default function ViewUser() {
         <tbody>
           {userDetails.map((userDetail) => (
             <tr key={userDetail.user_id}>
-              <td>{userDetail.user_id.slice(0,8) + "..."}</td>
+              <td>{userDetail.user_id.slice(0, 8) + "..."}</td>
               <td>{userDetail.user_firstname}</td>
               <td>{userDetail.user_lastname}</td>
               <td>{userDetail.user_email}</td>
@@ -80,21 +82,23 @@ export default function ViewUser() {
               <td>{userDetail.created_at}</td>
               <td>{userDetail.role}</td>
               <td>
-                <Link
-                  to={`/admin/users/${userDetail.user_id}`}
-                  className="text-decoration-none text-success"
-                >
-                  <Icon icon="tabler:edit" /> Edit
-                </Link>
-                <Link
-                  className="text-decoration-none text-danger"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleModal(userDetail.user_id);
-                  }}
-                >
-                  <Icon icon="fluent:delete-24-regular" /> Delete
-                </Link>
+                <div className="d-flex gap-2 justify-content-center">
+                  <Link
+                    to={`/admin/users/${userDetail.user_id}`}
+                    className="text-decoration-none d-inline-flex align-items-center text-success"
+                  >
+                    <Icon icon="tabler:edit" /> Edit
+                  </Link>
+                  <Link
+                    className="text-decoration-none d-inline-flex align-items-center mx-md-1 text-danger"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleModal(userDetail.user_id);
+                    }}
+                  >
+                    <Icon icon="fluent:delete-24-regular" /> Delete
+                  </Link>
+                </div>
               </td>
             </tr>
           ))}
