@@ -78,6 +78,11 @@ export default function DetailedView() {
               {item.additional_info}
             </p>
           </div>
+
+          {
+            type &&
+          <button className="p-2 rounded text-white bg-pri mt-2">{type === "lost" ? 'Found' : 'Claim'}</button>
+          }
           </Col>
         </Row>
       </Container>
