@@ -80,6 +80,9 @@
   background-color: var( --list-button-color1);
   border: 1px solid var( --list-button-color1);
 }
+button:hover {
+  opacity: 0.77;
+}
 
 .inputField {
   background-color: #eeeeee;
