@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import "./hero.css";
 import HeroForm from "./HeroForm";
+import svg from '../../assets/app-banner/category-text-shape.svg'
 
 export default function Hero() {
   return (
@@ -16,6 +17,8 @@ export default function Hero() {
             </p>
           </div>
           <HeroForm />
+
+        <img src={svg} alt="" className="d-none d-lg-inline position-absolute " style={{bottom: '60px', right: '-50px'}}/>
         </div>
       </Container>
     </section>
