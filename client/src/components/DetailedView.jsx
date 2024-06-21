@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Icon } from "@iconify-icon/react";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
+import { categories } from "./category";
 
-const InfoItem = ({ icon, label, value }) => (
+export const InfoItem = ({ icon, label, value }) => (
   
   <div className="d-flex align-items-center mb-3 gap-2 ">
     {" "}
@@ -25,6 +26,7 @@ const InfoItem = ({ icon, label, value }) => (
 
 export default function DetailedView() {
   let { id } = useParams();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
     const type = searchParams.get("type");
     console.log(type);
@@ -32,7 +34,12 @@ export default function DetailedView() {
     fontSize: "0.9rem",
   };
 
+
   const [item, setItem] = useState([]);
+
+  const handleClaim = ()=> {
+    navigate(`/claim/${id}`, {state: {item, type}})
+  }
 
   useEffect(() => {
     // Fetch item details using the ID
@@ -62,7 +69,7 @@ export default function DetailedView() {
             </h5>
 
             <InfoItem icon="gg:nametag" label="Name" value={item.item_name} />
-            <InfoItem icon="tabler:category-filled" label="Category" value={item.category} />
+            <InfoItem icon="tabler:category-filled" label="Category" value={categories[item.category_id - 1]} />
             <InfoItem icon="system-uicons:location" label="Location" value={item.location} />
             <InfoItem icon="lets-icons:date-today-light" label="Date" value={item.date} />
 
@@ -81,7 +88,7 @@ export default function DetailedView() {
 
           {
             type &&
-          <button className="p-2 rounded text-white bg-pri mt-2">{type === "lost" ? 'Found' : 'Claim'}</button>
+          <button className="p-2 rounded text-white bg-pri mt-2" onClick={handleClaim}>{type === "lost" ? 'Found' : 'Claim'}</button>
           }
           </Col>
         </Row>
