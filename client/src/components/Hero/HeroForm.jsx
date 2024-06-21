@@ -19,7 +19,7 @@ export default function HeroForm() {
           <option value={index+1} key={index}> {category} </option>
         ))}
       </select>
-      <Link to={`/view-post?category=${categoryValue}`} className="w-25 h-100">
+      <Link to={categoryValue === "all" ? '/view-post' : `/view-post?category=${categoryValue}`} className="w-25 h-100">
           <button className="text-white myBtn-primary py-2  w-100 h-100"> Search</button>
       </Link>
     </div>
