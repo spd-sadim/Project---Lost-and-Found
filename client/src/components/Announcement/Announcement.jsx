@@ -25,9 +25,9 @@ export default function Announcement() {
         <h3 className="heading primary-color fw-bold">Announcement</h3>
       </div>
       <Container>
-        <Row gap={8} className="gy-3" >
+        <Row gap={8} className="gy-3 gx-0 " >
           {posts.map((item) => (
-            <Col lg={3} md={4} key={item.id}>
+            <Col lg={3} md={6} key={item.id}>
               <AnnouncementCard item={item} />
             </Col>
           ))}
