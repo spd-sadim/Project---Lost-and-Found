@@ -8,6 +8,7 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import Wrapper from "./dashboard/Wrapper";
 import DeleteModal from "./modal/DeleteModal";
+import { categories } from "./category";
 
 export default function ViewItem({ type }) {
   const [show, setShow] = useState(false);
@@ -101,7 +102,7 @@ export default function ViewItem({ type }) {
                 <td>{item.item_name}</td>
                 <td>{item.location}</td>
                 <td>{item.date.split("T")[0]}</td>
-                <td>{item.category_id}</td>
+                <td>{  categories[item.category_id - 1]}</td>
                 <td>
                   <button className="btn btn-secondary rounded-pill">
                     Reported
