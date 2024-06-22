@@ -7,7 +7,6 @@ import { useSearchParams } from "react-router-dom";
 import { categories } from "./category";
 
 export const InfoItem = ({ icon, label, value }) => (
-  
   <div className="d-flex align-items-center mb-3 gap-2 ">
     {" "}
     <Icon
@@ -16,7 +15,6 @@ export const InfoItem = ({ icon, label, value }) => (
       height="35"
       className="bg-pri text-white p-2 rounded"
     />{" "}
-  
     <span className="d-flex flex-column m-0 list-unstyled">
       <span className="fw-bold">{label}</span>
       <span className="fs-6">{value}</span>
@@ -28,71 +26,125 @@ export default function DetailedView() {
   let { id } = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-    const type = searchParams.get("type");
-    console.log(type);
+  const type = searchParams.get("type");
+  console.log(type);
   const font = {
     fontSize: "0.9rem",
   };
 
+  const [isShow, setIsShow] = useState(false);
 
   const [item, setItem] = useState([]);
 
-  const handleClaim = ()=> {
-    navigate(`/claim/${id}`, {state: {item, type}})
-  }
+  console.log(item);
+  const handleClaim = () => {
+    navigate(`/claim/${id}`, { state: { item, type } });
+  };
 
   useEffect(() => {
     // Fetch item details using the ID
     setItem([]);
-    axios.get(`/api/${type}/view/${id}`)
-      .then(response => {
+    axios
+      .get(`/api/${type}/view/${id}`)
+      .then((response) => {
         setItem(response.data[0]);
       })
-      .catch(error => {
-        console.error('Error fetching item details:', error);
+      .catch((error) => {
+        console.error("Error fetching item details:", error);
       });
   }, [type, id]);
   return (
-    <div>
+    <section>
       <Container>
+        <div className="breadcrumb">
+          <p>Home / Lost / {item.item_name}</p>
+        </div>
+        <div className="item-heading border-bottom mb-3">
+          <h3>{item.item_name}</h3>
+          <p className="d-flex item-center gap-2">
+            {" "}
+            <Icon icon="subway:location" width="25" height="25" />{" "}
+            {item.location}
+          </p>
+        </div>
         <Row>
-          <Col lg={4} md={5}>
-          <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-            <img src={`http://localhost:3000/Images/${item.image}`} alt="item image" className="img-fluid rounded" />
-          </div>
-          </Col> 
-          <Col lg={8} md={7}>
-            <button>status</button>
-            <h5 className="d-flex  align-items-center gap-2 font-primary fw-bold">
-              <Icon icon="game-icons:binoculars" width="35" height="35" />
-              <span>Item details</span>
-            </h5>
+          <Col lg={8}>
+            <div className="image-wrapper w-100 d-flex align-items-center justify-content-center">
+              <img
+                src={`http://localhost:3000/Images/${item.image}`}
+                className="img-fluid"
+                alt={item.item_name + " image"}
+              />
+            </div>
 
-            <InfoItem icon="gg:nametag" label="Name" value={item.item_name} />
-            <InfoItem icon="tabler:category-filled" label="Category" value={categories[item.category_id - 1]} />
-            <InfoItem icon="system-uicons:location" label="Location" value={item.location} />
-            <InfoItem icon="lets-icons:date-today-light" label="Date" value={item.date} />
+           
 
-          <div className="description shadow-lg bg-sec p-3 mt-5 border rounded ">
-            <h5 className="d-flex align-items-center gap-2 font-primary fw-bold">
-              {" "}
-              <span>Additional Info </span> 
-              <Icon icon="ph:puzzle-piece-light" width="25" height="25" />{" "}
-            </h5>
+            <div className="mt-5">
+              <h4 className="border-bottom py-2">Item description</h4>
 
-            <p>
-              {" "}
-              {item.additional_info}
-            </p>
-          </div>
+              <p className="fs-6">{item.additional_info}</p>
+            </div>
 
-          {
-            type &&
-          <button className="p-2 rounded text-white bg-pri mt-2" onClick={handleClaim}>{type === "lost" ? 'Found' : 'Claim'}</button>
-          }
+
+            <iframe
+        className="mt-5"
+        width="100%"
+        height="400"
+        allowFullScreen=""
+        loading="lazy"
+        id="gmap_canvas"
+        samesite="Strict"
+        src={`https://maps.google.com/maps?q=${item.location}&t=&z=10&ie=UTF8&iwloc=&output=embed`}
+      ></iframe>
+          </Col>
+          <Col lg={4} className="border-start sticky-top">
+            <div className="p-2 border shadow-sm bg-white">
+              <div className="d-flex align-items-center justify-content-between">
+                <span>Info</span>
+                <span>
+                  <Icon
+                    icon="bxs:down-arrow"
+                    width="16"
+                    height="16"
+                    className="pointer"
+                    onClick={() => setIsShow(!isShow)}
+                  />
+                </span>
+              </div>
+              <hr />
+
+              <div
+                className={`d-flex flex-column w-100 justify-content-center ${
+                  isShow ? "d-none" : ""
+                } `}
+              >
+                <span>
+                  <span>Cateogry</span>
+                  <span> {categories[item.category_id - 1]}</span>
+                </span>
+
+                <span>
+                  <span>Location</span>
+                  <span> {item.location} </span>
+                </span>
+                <span>
+                  <span>Date Posted</span>
+                  <span> {item.date} </span>
+                </span>
+              </div>
+            </div>
+
+            <div className="p-2 border shadow-sm bg-white mt-2 text-uppercase ">
+              <p>{item.type}</p>
+              <button className="btn btn-primary fw-bold">
+                This item is mine!
+              </button>
+            </div>
           </Col>
         </Row>
       </Container>
-    </div>
+
+      
+    </section>
   );
 }
