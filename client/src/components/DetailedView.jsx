@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router";
 import { Icon } from "@iconify-icon/react";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import { categories } from "./category";
+import ClaimModal from "./modal/ClaimModal";
+import { AuthContext } from "../context/AuthContext";
 
 export const InfoItem = ({ icon, label, value }) => (
   <div className="d-flex align-items-center mb-3 gap-2 ">
@@ -24,6 +26,9 @@ export const InfoItem = ({ icon, label, value }) => (
 
 export default function DetailedView() {
   let { id } = useParams();
+  const { user } = useContext(AuthContext);
+
+  console.log(user);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
@@ -33,17 +38,18 @@ export default function DetailedView() {
   };
 
   const [isShow, setIsShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const [item, setItem] = useState([]);
 
   console.log(item);
-  const handleClaim = () => {
-    navigate(`/claim/${id}`, { state: { item, type } });
+  const handleClaimModal = () => {
+    setShowModal(!showModal);
   };
 
   useEffect(() => {
     // Fetch item details using the ID
-    setItem([]);
+    setItem({});
     axios
       .get(`/api/${type}/view/${id}`)
       .then((response) => {
@@ -57,7 +63,10 @@ export default function DetailedView() {
     <section>
       <Container>
         <div className="breadcrumb">
-          <p>Home / Lost / {item.item_name}</p>
+          <p>
+            {" "}
+            <a href="/">Home</a> / {item.item_name}
+          </p>
         </div>
         <div className="item-heading border-bottom mb-3">
           <h3>{item.item_name}</h3>
@@ -77,74 +86,91 @@ export default function DetailedView() {
               />
             </div>
 
-           
-
             <div className="mt-5">
-              <h4 className="border-bottom py-2">Item description</h4>
+              <h4 className="border-bottom py-2 fw-bold">Item description</h4>
 
               <p className="fs-6">{item.additional_info}</p>
             </div>
 
-
             <iframe
-        className="mt-5"
-        width="100%"
-        height="400"
-        allowFullScreen=""
-        loading="lazy"
-        id="gmap_canvas"
-        samesite="Strict"
-        src={`https://maps.google.com/maps?q=${item.location}&t=&z=10&ie=UTF8&iwloc=&output=embed`}
-      ></iframe>
+              className="mt-5"
+              width="100%"
+              height="400"
+              allowFullScreen=""
+              loading="lazy"
+              id="gmap_canvas"
+              samesite="Strict"
+              src={`https://maps.google.com/maps?q=${item.location}&t=&z=10&ie=UTF8&iwloc=&output=embed`}
+            ></iframe>
           </Col>
-          <Col lg={4} className="border-start sticky-top">
-            <div className="p-2 border shadow-sm bg-white">
-              <div className="d-flex align-items-center justify-content-between">
-                <span>Info</span>
-                <span>
-                  <Icon
-                    icon="bxs:down-arrow"
-                    width="16"
-                    height="16"
-                    className="pointer"
-                    onClick={() => setIsShow(!isShow)}
-                  />
-                </span>
+          <Col lg={4} className="sticky-top">
+            <div className="border-start px-5">
+              <div className="py-2 px-4 border shadow-sm bg-white">
+                <div className="d-flex align-items-center justify-content-between">
+                  <span>Info</span>
+                  <span>
+                    <Icon
+                      icon="bxs:down-arrow"
+                      width="16"
+                      height="16"
+                      className="pointer"
+                      onClick={() => setIsShow(!isShow)}
+                    />
+                  </span>
+                </div>
+                <hr />
+
+                <div
+                  className={`d-flex flex-column w-100 justify-content-center ${
+                    isShow ? "d-none" : ""
+                  } `}
+                >
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Category</td>
+                        <td> {categories[item.category_id - 1]}</td>
+                      </tr>
+                      <tr>
+                        <td>Location</td>
+                        <td>{item.location}</td>
+                      </tr>
+                      <tr>
+                        <td>Location</td>
+                        <td>{item.location}</td>
+                      </tr>
+                      <tr>
+                        <td>Date posted</td>
+                        <td>{item.date ? item.date.split("T")[0] : "N/A"}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              <hr />
 
-              <div
-                className={`d-flex flex-column w-100 justify-content-center ${
-                  isShow ? "d-none" : ""
-                } `}
-              >
-                <span>
-                  <span>Cateogry</span>
-                  <span> {categories[item.category_id - 1]}</span>
-                </span>
-
-                <span>
-                  <span>Location</span>
-                  <span> {item.location} </span>
-                </span>
-                <span>
-                  <span>Date Posted</span>
-                  <span> {item.date} </span>
-                </span>
+              <div className="py-2 px-4 border shadow-sm bg-white mt-2 text-uppercase ">
+                <p>{item.type}</p>
+                <button
+                  className="btn btn-primary fw-bold"
+                  type="button"
+                  onClick={handleClaimModal}
+                >
+                  This item is mine!
+                </button>
               </div>
-            </div>
-
-            <div className="p-2 border shadow-sm bg-white mt-2 text-uppercase ">
-              <p>{item.type}</p>
-              <button className="btn btn-primary fw-bold">
-                This item is mine!
-              </button>
             </div>
           </Col>
         </Row>
-      </Container>
 
-      
+        <ClaimModal
+          handleClaimModal={handleClaimModal}
+          show={showModal}
+          itemType={item.type}
+          itemId={item.id}
+          userId={user.user_id}
+          userName={user.user_firstname + " " + user.user_lastname}
+        />
+      </Container>
     </section>
   );
 }
