@@ -13,13 +13,16 @@ export const deletePost = (tableName, id)=>{
 }
 
 export const createFoundPost = async(req, res)=>{
-   const {name, location, date, additional_info, category , user_id} = req.body;
+   const {item_name, location, date, additional_info, category , user_id} = req.body;
+   console.log(req.body)
    const image = req.file;
    const category_id = parseInt(category, 10);
    try {
         // const sql = 'INSERT INTO found_posts(item_name, location, date, additional_info, category_id, image, user_id ) VALUES ($1, $2, $3, $4, $5, $6, $7)'
-        const values = [name, location, date, additional_info, category_id, image.filename, user_id]
+        const values = [item_name, location, date, additional_info, category_id, image.filename, user_id]
+        console.log(values)
        const result =  await createPost('found_posts', values);
+       console.log(result)
         res.status(201).send('Create post succesfully');
    } catch (err){
     res.status(500).json(err);
