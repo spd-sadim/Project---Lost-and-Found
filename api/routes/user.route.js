@@ -11,7 +11,7 @@ import { verifyAdmin, verifyUser } from "../utils/verifyUser.js";
 
 const router = express.Router();
 
-router.get("/", getUsers);
+router.get("/", verifyAdmin, getUsers);
 router.get("/:id", verifyUser, verifyAdmin, getUserById);
 router.delete("/:id", verifyAdmin, deleteUser);
 router.put("/profile", verifyUser, updateUser);
