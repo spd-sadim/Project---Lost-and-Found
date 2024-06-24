@@ -23,6 +23,7 @@ import EditPost from "./components/dashboard/EditPost";
 import InquiryDetails from "./components/dashboard/InquiryDetails";
 import Item from "./pages/Item";
 import ChangePassword from "./components/dashboard/ChangePassword";
+import { UserClaims } from "./components/dashboard/UserClaims";
 
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
         {/* user dashboard */}
         <Route element={<PrivateRoute allowedRoles={"user"}/>}>
         <Route path="/user" element={<Dashboard />}>
+        <Route path="/user/claims" element={<UserClaims />} />
           <Route path="/user/found" element={<ViewItem type='found'/>} />
           <Route path="/user/found/:id" element={<DetailedView />} />
           <Route path="/user/found/edit/:id" element={<EditPost addInputField={foundInputField}/>}  title="Found" />
