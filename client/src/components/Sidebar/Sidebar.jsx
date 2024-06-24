@@ -168,6 +168,16 @@ export default function Sidebar({ isCollapse }) {
                 </ul>
               </li>
             ))}
+            {
+                user.role === 'user' ?
+           ( <Link
+              to={`/${user.role}/claims`}
+              className="text-decoration-none text-color sidebar-links px-1"
+            >
+              <Icon icon="mdi:clipboard-list" className="px-1" />
+              My Claims
+            </Link>) : null
+            }
             {user.role === "admin"
               ? links.map((link) => (
                   <Link
