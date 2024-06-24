@@ -12,6 +12,7 @@ export default function AddItem({ addInputField, title, endpoint }) {
   const [image, setImage] = useState(null);
   const [isPerson, setIsPerson] = useState(false);
   const [data, setData] = useState({});
+  const [success, setSuccess] = useState("");
   const { user } = useContext(AuthContext);
 
   const handleFileChange = (e) => {
@@ -65,6 +66,9 @@ export default function AddItem({ addInputField, title, endpoint }) {
       console.log(data);
       console.log("endpoint", endpoint);
       const res = await axios.post(endpoint, formData);
+      setData({});
+      setImage(null);
+      setSuccess(response.data.message)
     } catch (err) {
       console.log(err);
     }
@@ -74,8 +78,13 @@ export default function AddItem({ addInputField, title, endpoint }) {
       <h4 className="py-3">
         Create <span>{title}</span> Post
       </h4>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <form onSubmit={handleSubmit} encType="multipart/form-data" className="pb-4">
         <div className="form-wrapper px-4 py-3 rounded border bg-white">
+        {success && (
+            <div className="alert alert-success" role="alert">
+              {success}
+            </div>
+          )}
           <div className="row gy-3">
             {addInputField.map((item) => (
               <Col md="6" key={item.id}>
