@@ -5,8 +5,11 @@ import lostRoutes from "./routes/lost.route.js";
 import authRoutes from "./routes/auth.route.js";
 import postRoutes from "./routes/post.route.js";
 import inquiryRoutes from "./routes/inquiry.route.js";
+import claimRoutes from "./routes/claim.route.js";
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
+// import { claimPost, getUserClaims } from "./controllers/user.controller.js";
+// import upload from "./utils/multer.js";
 
 dotenv.config();
 
@@ -24,6 +27,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/found", foundRoutes)
 app.use("/api/lost", lostRoutes)
 app.use("/api/posts", postRoutes)
+app.use("/api/claim", claimRoutes)
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
