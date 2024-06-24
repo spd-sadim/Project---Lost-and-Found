@@ -31,3 +31,18 @@ VALUES
     ('Stationery and Office supplies'),
     ('Vehicles'),
     ('Others');
+
+
+CREATE TABLE claims (
+    id SERIAL PRIMARY KEY,
+    post_id INT NOT NULL,            -- ID of the post being claimed
+    post_type VARCHAR(10) NOT NULL,
+	message text NOT NULL,
+	image varchar(255),
+	user_id UUID NOT NULL,           -- User making the claim
+	user_name varchar(255) NOT NULL, -- 'lost' or 'found'
+    status VARCHAR(20) DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (user_id, post_id, post_type),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
