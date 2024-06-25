@@ -71,6 +71,7 @@ export default function Inquiry() {
                 <td>{inquiry.email}</td>
                 <td>{inquiry.created_at}</td>
                 <td>
+                <div className="d-flex gap-2 justify-content-center">
                   <Link
                     to={`/admin/inquiry/${inquiry.id}`}
                     className="text-decoration-none text-secondary"
@@ -86,6 +87,7 @@ export default function Inquiry() {
                   >
                     <Icon icon="fluent:delete-24-regular" /> Delete
                   </Link>
+                  </div> 
                 </td>
               </tr>
             ))
