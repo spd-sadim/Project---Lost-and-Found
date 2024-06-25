@@ -3,11 +3,11 @@ import Wrapper from "./Wrapper";
 import FormWrapper from "./FormWrapper";
 import { Row,Col, Container } from "react-bootstrap";
 import axios from "axios";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 export default function InquiryDetails() {
   const [inquiry, setInquiy] = useState({});
-
+const navigate = useNavigate();
   const { id } = useParams();
   useEffect(() => {
       const fetchData = async () => {
@@ -21,6 +21,18 @@ export default function InquiryDetails() {
     }
     fetchData();
   },[]);
+
+
+  const deleteInquiry = async () => {
+    try {
+      console.log("api id", id);
+      await axios.delete(`/api/inquiry/${id}`);
+      navigate("/admin/inquiry");
+      alert("Message delete successfully");
+    } catch (err) {
+      console.error("Error deleting item", err);
+    }
+  };
   return (
     <Wrapper>
       <div className="px-3">
@@ -50,7 +62,7 @@ export default function InquiryDetails() {
               <span> {inquiry.created_at}</span>
             </Col>
           </Row>
-            <button className="bg-danger">Delete</button>
+            <button className="btn text-white my-3 bg-danger" type="button" onClick={deleteInquiry}>Delete</button>
         </Container>
       </FormWrapper>
     </Wrapper>
