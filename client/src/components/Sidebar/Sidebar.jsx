@@ -73,23 +73,23 @@ export default function Sidebar({ isCollapse }) {
         },
       ],
     },
-    {
-      id: 5,
-      name: "Notification",
-      icon: <Icon icon="clarity:notification-solid" />,
-      subLinks: [
-        {
-          id: 1,
-          subName: "Lost Notification",
-          subRoute: "/lost/notification",
-        },
-        {
-          id: 2,
-          subName: "Found Notification",
-          subRoute: "/found/notification",
-        },
-      ],
-    },
+    // {
+    //   id: 5,
+    //   name: "Notification",
+    //   icon: <Icon icon="clarity:notification-solid" />,
+    //   subLinks: [
+    //     {
+    //       id: 1,
+    //       subName: "Lost Notification",
+    //       subRoute: "/lost/notification",
+    //     },
+    //     {
+    //       id: 2,
+    //       subName: "Found Notification",
+    //       subRoute: "/found/notification",
+    //     },
+    //   ],
+    // },
   ];
 
   // const userLinks = adminLinks.filter((item) => item.id < 6);
@@ -199,6 +199,16 @@ export default function Sidebar({ isCollapse }) {
                   </Link>
                 ))
               : null}
+              {
+                user.role === 'admin' ?
+           ( <Link
+              to={`/${user.role}/claims`}
+              className="text-decoration-none text-color sidebar-links px-1"
+            >
+              <Icon icon="mdi:clipboard-list" className="px-1" />
+               Claims
+            </Link>) : null
+            }
           </ul>
         </div>
       </div>
