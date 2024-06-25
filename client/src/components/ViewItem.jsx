@@ -27,7 +27,15 @@ export default function ViewItem({ type }) {
     setItems([]);
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/api/${type}/${user.user_id}`);
+        let endpoint;
+        if (user.role === "admin") {
+          // const response  = await axios.get(`/api/${type}/`)
+           endpoint = `/api/${type}/`;
+        }
+        else {
+           endpoint = `/api/${type}/${user.user_id}`;
+        }
+        const response = await axios.get(endpoint);
         setItems(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -104,9 +112,9 @@ export default function ViewItem({ type }) {
                 <td>{item.date.split("T")[0]}</td>
                 <td>{  categories[item.category_id - 1]}</td>
                 <td>
-                  <button className="btn btn-secondary rounded-pill">
-                    Reported
-                  </button>
+                  <span className={`badge ${item.status === "claimed" ? "text-bg-success" : item.status === "reported" ? "text-bg-secondary" : "text-bg-info"}`}>
+                    {item.status}
+                  </span>
                 </td>
                 <td>
                   <div className="d-flex gap-2 justify-content-center">
