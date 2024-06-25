@@ -24,6 +24,8 @@ import InquiryDetails from "./components/dashboard/InquiryDetails";
 import Item from "./pages/Item";
 import ChangePassword from "./components/dashboard/ChangePassword";
 import { UserClaims } from "./components/dashboard/UserClaims";
+import Welcome from "./components/dashboard/Welcome";
+import AllClaims from "./components/dashboard/AllClaims";
 
 
 export default function App() {
@@ -60,6 +62,8 @@ export default function App() {
         {/* admin dashboard */}
         <Route element={<PrivateRoute allowedRoles={"admin"} />}>
         <Route path="/admin" element={<Dashboard />} > 
+        <Route path="/admin/" element={<Welcome />} />
+        <Route path="/admin/claims" element={<AllClaims />} />
           <Route path="/admin/profile" element={<Profile />} />
           <Route path="/admin/found/edit/:id" element={<EditPost addInputField={foundInputField}/>}  title="Found" />
           <Route path="/admin/lost/edit/:id" element={<EditPost addInputField={lostInputField}/>}  title="Found" />
