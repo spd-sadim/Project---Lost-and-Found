@@ -7,6 +7,7 @@ import { categories } from "../category";
 import Wrapper from "./Wrapper";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 // import { personInputField } from "../utils/utils"; // Uncomment if needed
 
 export default function EditPost({ addInputField, title }) {
@@ -19,12 +20,16 @@ export default function EditPost({ addInputField, title }) {
     additional_info: "",
     category_id: "",
     image: "",
+    status: ""
   });
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
   const endpoint = `/api/${type}/update/${id}`;
   const [successMessage, setSuccessMessage] = useState('')
+  const {user} = useContext(AuthContext);
+
+  console.log(data)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -157,7 +162,31 @@ export default function EditPost({ addInputField, title }) {
                 ))}
               </select>
             </Col>
-
+            {
+              user.role === "admin" ? (
+                <Col md="6">
+              <label htmlFor="category" className="fw-bold mb-2">
+                Status
+              </label>
+              <select
+                name="status"
+                id="status"
+                className="p-2 w-100 border"
+                onChange={handleChange}
+                // value={data.category}
+                value={data.status}
+                required
+              >
+               <option value="reported">reported</option>
+               <option value="pending">pending</option>
+               <option value="claimed">claimed</option>
+               
+               
+              </select>
+            </Col>
+              ) : null
+            }
+           
             {/* render person inputField */}
             {/* {isPerson &&
               personInputField.map((input) => (
@@ -228,7 +257,7 @@ export default function EditPost({ addInputField, title }) {
             required={!data.image}
           />
         </div>
-        <div className="buttons">
+        <div className="buttons py-3">
           <button type="submit" className="btn btn-secondary">
             Edit post
           </button>
