@@ -1,12 +1,12 @@
 import express from "express";
 import { createFoundPost, deleteFoundPost, getAllFoundPost, getFoundPostById, getFoundPostByUserId, updateFoundPostById  } from "../controllers/found.controller.js";
 import upload from "../utils/multer.js";
-import { verifyUser } from "../utils/verifyUser.js";
+import { verifyAdmin, verifyUser } from "../utils/verifyUser.js";
 
 
 const router = express.Router();
 
-router.get("/", getAllFoundPost);
+router.get("/",verifyAdmin, getAllFoundPost);
 router.post("/create", upload.single('image'),verifyUser, createFoundPost);
 router.delete("/delete/:id", deleteFoundPost);
 router.get("/:id", getFoundPostByUserId);

@@ -58,7 +58,7 @@ export const getAllFoundPost = async(req, res, next) => {
 
 
 export const updateFoundPostById = async (req, res, next) => {
-    const {item_name, location, date, additional_info, category_id, image = null} = req.body;
+    const {item_name, location, date, additional_info, category_id, image = null, status} = req.body;
     const newImage = req.file ? req.file.filename : image;
     const updatedData = {
       item_name,
@@ -67,7 +67,9 @@ export const updateFoundPostById = async (req, res, next) => {
       additional_info,
       category_id,
       image: newImage,
+      status
     };
+    // console.log(update)
     const { id } = req.params;
     const query = `
       UPDATE found_posts
@@ -77,8 +79,9 @@ export const updateFoundPostById = async (req, res, next) => {
         date = $3,
         additional_info = $4,
         category_id = $5,
-        image = $6
-      WHERE id = $7
+        image = $6,
+        status = $7
+      WHERE id = $8
       RETURNING *;
     `;
     const values = [
@@ -88,6 +91,7 @@ export const updateFoundPostById = async (req, res, next) => {
       updatedData.additional_info,
       updatedData.category_id,
       updatedData.image,
+      updatedData.status,
       id,
     ];
     try {
