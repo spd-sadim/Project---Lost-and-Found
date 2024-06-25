@@ -65,7 +65,7 @@ export default function DetailedView() {
         <div className="breadcrumb">
           <p>
             {" "}
-            <a href="/">Home</a> / {item.item_name}
+            <a href="/" className="text-decoration-none text-black fw-bold">Home</a> / {item.item_name}
           </p>
         </div>
         <div className="item-heading border-bottom mb-3">
@@ -89,7 +89,7 @@ export default function DetailedView() {
             <div className="mt-5">
               <h4 className="border-bottom py-2 fw-bold">Item description</h4>
 
-              <p className="fs-6">{item.additional_info}</p>
+              <p className="fs-6 text-seondary">{item.additional_info}</p>
             </div>
 
             <iframe
@@ -103,7 +103,7 @@ export default function DetailedView() {
               src={`https://maps.google.com/maps?q=${item.location}&t=&z=10&ie=UTF8&iwloc=&output=embed`}
             ></iframe>
           </Col>
-          <Col lg={4} className="sticky-top">
+          <Col lg={4}>
             <div className="border-start px-5">
               <div className="py-2 px-4 border shadow-sm bg-white">
                 <div className="d-flex align-items-center justify-content-between">
@@ -136,10 +136,6 @@ export default function DetailedView() {
                         <td>{item.location}</td>
                       </tr>
                       <tr>
-                        <td>Location</td>
-                        <td>{item.location}</td>
-                      </tr>
-                      <tr>
                         <td>Date posted</td>
                         <td>{item.date ? item.date.split("T")[0] : "N/A"}</td>
                       </tr>
@@ -149,13 +145,16 @@ export default function DetailedView() {
               </div>
 
               <div className="py-2 px-4 border shadow-sm bg-white mt-2 text-uppercase ">
-                <p>{item.type}</p>
+                <p className="fw-bold text-secondary">{item.type}</p>
                 <button
-                  className="btn btn-primary fw-bold"
+                  className="btn btn-secondary fw-bold"
                   type="button"
                   onClick={handleClaimModal}
                 >
-                  This item is mine!
+                {
+                  item.type === "found" ? "This item is mine!" : "I found this item"
+                }
+                  
                 </button>
               </div>
             </div>
