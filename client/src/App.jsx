@@ -46,6 +46,7 @@ export default function App() {
         {/* user dashboard */}
         <Route element={<PrivateRoute allowedRoles={"user"}/>}>
         <Route path="/user" element={<Dashboard />}>
+        <Route path="/user/" element={<Welcome />} />
         <Route path="/user/claims" element={<UserClaims />} />
           <Route path="/user/found" element={<ViewItem type='found'/>} />
           <Route path="/user/found/:id" element={<DetailedView />} />
