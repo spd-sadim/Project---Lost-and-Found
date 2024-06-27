@@ -19,6 +19,7 @@ export default function Announcement() {
     }
     fetchData();
   }, [])
+
   return (
     <div className="py-2">
       <div className="title py-5 text-center position-relative">
@@ -26,8 +27,8 @@ export default function Announcement() {
       </div>
       <Container>
         <Row gap={8} className="gy-3 gx-0 " >
-          {posts.map((item) => (
-            <Col lg={3} md={6} key={item.id}>
+          {posts.slice(0,4).map((item) => (
+            <Col lg={3} md={6} key={item.item_name}>
               <AnnouncementCard item={item} />
             </Col>
           ))}
