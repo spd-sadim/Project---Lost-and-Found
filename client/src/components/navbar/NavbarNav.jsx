@@ -31,7 +31,7 @@ export default function NavbarNav() {
             </Nav.Link>
           </Nav>
          
-          {user ? <Link to={`/${user.role}`}> <Icon icon="mingcute:user-4-line" width="32" height="32" title="user" className="text-white"/> </Link> :
+          {user ? <Link to={`/${user.role}`} className="d-flex gap-2 align-items-center text-decoration-none text-white"> <Icon icon="mingcute:user-4-line" width="32" height="32" title="user" className="text-white"/> {user.user_firstname + " " + user.user_lastname} </Link> :
             <div className="auth-buttons d-flex gap-2 ">
               <Link to="/login">
                 <Button
