@@ -6,7 +6,7 @@ export default function HelpAdvice() {
   return (
     <>
     <NavbarNav />
-    <section className="py-5 mt-5">
+    <section className="pt-5 mt-5">
       <HelpAdviceForm />
       {/* map */}
       <iframe
