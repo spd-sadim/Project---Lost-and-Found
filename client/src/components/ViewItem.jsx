@@ -2,18 +2,30 @@ import Table from "react-bootstrap/Table";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import Wrapper from "./dashboard/Wrapper";
 import DeleteModal from "./modal/DeleteModal";
 import { categories } from "./category";
+import { Dropdown } from "react-bootstrap";
+import { ExportAsExcel, ExportAsPdf } from "react-export-table";
 
 export default function ViewItem({ type }) {
   const [show, setShow] = useState(false);
   const [items, setItems] = useState([]);
   const [deleteId, setDeleteId] = useState(null);
+  const header = [
+    "item_id",
+    "item_name",
+    "location",
+    "date",
+    "additional_information",
+    "category_id",
+    "image_url",
+    "user_id",
+    "item_type",
+    "item_status",
+  ]
   const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
@@ -30,10 +42,9 @@ export default function ViewItem({ type }) {
         let endpoint;
         if (user.role === "admin") {
           // const response  = await axios.get(`/api/${type}/`)
-           endpoint = `/api/${type}/`;
-        }
-        else {
-           endpoint = `/api/${type}/${user.user_id}`;
+          endpoint = `/api/${type}/`;
+        } else {
+          endpoint = `/api/${type}/${user.user_id}`;
         }
         const response = await axios.get(endpoint);
         setItems(response.data);
@@ -76,7 +87,46 @@ export default function ViewItem({ type }) {
     <Wrapper>
       <div className=" d-flex justify-content-between w-100 my-3">
         <h4 className="">View {type} Items</h4>
-        <button className="btn btn-dark">+ New Item</button>
+        <div className="d-flex gap-2">
+          <Dropdown>
+            <Dropdown.Toggle
+              split
+              variant="white"
+              id="dropdown-basic"
+              className="d-flex align-items-center justify-content-center"
+            >
+              <span className="px-2 pointer">
+                <Icon icon="material-symbols:download" width="25" height="25" />
+              </span>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item>
+                <ExportAsExcel
+                  data={items}
+                  fileName="items"
+                  headers={header}
+                >
+                  {(props) => <span {...props}>Export as Excel</span>}
+                </ExportAsExcel>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <ExportAsPdf
+                  data={items}
+                  fileName="itemsPdf"
+                  title={"List of " + type + " posts"}
+                  theme="grid"
+                  styles={{ fontSize: 5 }}
+                  headers={header}
+                >
+                  {(props) => <span {...props}>Export as Pdf</span>}
+                </ExportAsPdf>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+
+        <Link to={`/${user.role}/${type}/create`}>  <button className="btn btn-dark" as={Link} href="/">+ New Item</button> </Link>
+        </div>
       </div>
       <Table responsive bordered hover size="lg">
         <thead>
@@ -110,9 +160,17 @@ export default function ViewItem({ type }) {
                 <td>{item.item_name}</td>
                 <td>{item.location}</td>
                 <td>{item.date.split("T")[0]}</td>
-                <td>{  categories[item.category_id - 1]}</td>
+                <td>{categories[item.category_id - 1]}</td>
                 <td>
-                  <span className={`badge ${item.status === "claimed" ? "text-bg-success" : item.status === "reported" ? "text-bg-secondary" : "text-bg-info"}`}>
+                  <span
+                    className={`badge ${
+                      item.status === "claimed"
+                        ? "text-bg-success"
+                        : item.status === "reported"
+                        ? "text-bg-secondary"
+                        : "text-bg-info"
+                    }`}
+                  >
                     {item.status}
                   </span>
                 </td>
