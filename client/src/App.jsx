@@ -26,6 +26,7 @@ import ChangePassword from "./components/dashboard/ChangePassword";
 import { UserClaims } from "./components/dashboard/UserClaims";
 import Welcome from "./components/dashboard/Welcome";
 import AllClaims from "./components/dashboard/AllClaims";
+import ProtectedRoute from "./components/privateRoute/ProtectedRoute";
 
 
 export default function App() {
@@ -36,8 +37,10 @@ export default function App() {
       {/* <NavbarNav /> */}
       <Routes>
         <Route index path="/" element={<Home />} />
+        <Route element={<ProtectedRoute />}>
         <Route path="/login" element={<SignInUp><Login /> </SignInUp>} />
         <Route path="/sign-up" element={<SignInUp><SignUp /> </SignInUp>} />
+        </Route>
         <Route path="/help-advice" element={<HelpAdvice />} />
         <Route path="/report-item" element={<ReportItem />} />
         <Route path="/unauthorized" element={<UnAuthorized />} />
