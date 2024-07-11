@@ -14,6 +14,7 @@ export default function ViewItem({ type }) {
   const [show, setShow] = useState(false);
   const [items, setItems] = useState([]);
   const [deleteId, setDeleteId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const header = [
     "item_id",
     "item_name",
@@ -25,7 +26,7 @@ export default function ViewItem({ type }) {
     "user_id",
     "item_type",
     "item_status",
-  ]
+  ];
   const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
@@ -35,13 +36,10 @@ export default function ViewItem({ type }) {
   };
 
   useEffect(() => {
-    // Define an async function to fetch data
-    setItems([]);
     const fetchData = async () => {
       try {
         let endpoint;
         if (user.role === "admin") {
-          // const response  = await axios.get(`/api/${type}/`)
           endpoint = `/api/${type}/`;
         } else {
           endpoint = `/api/${type}/${user.user_id}`;
@@ -52,13 +50,11 @@ export default function ViewItem({ type }) {
         console.error("Error fetching data:", error);
       }
     };
-    // Call the async function to fetch data
     fetchData();
   }, [type, user.user_id]);
 
   const deletePost = async (id) => {
     try {
-      console.log("api id", id);
       await axios.delete(`/api/${type}/delete/${id}`);
       setItems(items.filter((item) => item.id != id));
       setShow(false);
@@ -75,6 +71,10 @@ export default function ViewItem({ type }) {
     }
   };
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   const handleRowClick = (id) => {
     navigate(`/${user.role}/${type}/${id}?type=${type}`);
   };
@@ -83,11 +83,31 @@ export default function ViewItem({ type }) {
     navigate(`/${user.role}/${type}/edit/${id}?type=${type}`);
   };
 
+
+  const filteredItems = items.map(item => {
+    return {
+      ...item,
+      category_name: categories[item.category_id - 1] // Add category name to each item
+    };
+  }).filter((item) =>
+    Object.values(item).some((value) =>
+      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+  
+
   return (
     <Wrapper>
-      <div className=" d-flex justify-content-between w-100 my-3">
+      <div className="d-flex justify-content-between w-100 my-3">
         <h4 className="">View {type} Items</h4>
         <div className="d-flex gap-2">
+          <input
+            type="text"
+            className="border p-2 rounded"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
           <Dropdown>
             <Dropdown.Toggle
               split
@@ -102,17 +122,13 @@ export default function ViewItem({ type }) {
 
             <Dropdown.Menu>
               <Dropdown.Item>
-                <ExportAsExcel
-                  data={items}
-                  fileName="items"
-                  headers={header}
-                >
+                <ExportAsExcel data={filteredItems} fileName="items" headers={header}>
                   {(props) => <span {...props}>Export as Excel</span>}
                 </ExportAsExcel>
               </Dropdown.Item>
               <Dropdown.Item>
                 <ExportAsPdf
-                  data={items}
+                  data={filteredItems}
                   fileName="itemsPdf"
                   title={"List of " + type + " posts"}
                   theme="grid"
@@ -124,8 +140,11 @@ export default function ViewItem({ type }) {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-
-        <Link to={`/${user.role}/${type}/create`}>  <button className="btn btn-dark" as={Link} href="/">+ New Item</button> </Link>
+          <Link to={`/${user.role}/${type}/create`}>
+            <button className="btn btn-dark" as={Link} href="/">
+              + New Item
+            </button>
+          </Link>
         </div>
       </div>
       <Table responsive bordered hover size="lg">
@@ -142,8 +161,8 @@ export default function ViewItem({ type }) {
           </tr>
         </thead>
         <tbody>
-          {items.length > 0 ? (
-            items.map((item) => (
+          {filteredItems.length > 0 ? (
+            filteredItems.map((item) => (
               <tr
                 key={item.id}
                 onClick={() => handleRowClick(item.id)}
@@ -176,13 +195,6 @@ export default function ViewItem({ type }) {
                 </td>
                 <td>
                   <div className="d-flex gap-2 justify-content-center">
-                    {/* <Link
-                      to={`/${user.role}/${type}/${item.id}?type=${type}`}
-                      className="text-decoration-none"
-                    >
-                      <Icon icon="lets-icons:view-alt" />
-                      View
-                    </Link> */}
                     <div
                       className="text-decoration-none d-inline-flex align-items-center text-primary"
                       onClick={(e) => {
@@ -207,31 +219,11 @@ export default function ViewItem({ type }) {
             ))
           ) : (
             <tr>
-              {" "}
               <td colSpan="8">There is no data</td>
             </tr>
           )}
         </tbody>
       </Table>
-
-      {/* modal to delete Item*/}
-      {/* <Modal
-        show={show}
-        onHide={handleModal}
-        backdrop="static"
-        keyboard={false}
-        centered
-      >
-        <Modal.Body>Do you want to delete the item?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModal}>
-            No
-          </Button>
-          <Button variant="danger" onClick={handleDeleteItem}>
-            Yes
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
 
       <DeleteModal
         handleModal={handleModal}
