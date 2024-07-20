@@ -83,24 +83,24 @@ export default function ViewItem({ type }) {
     navigate(`/${user.role}/${type}/edit/${id}?type=${type}`);
   };
 
-
-  const filteredItems = items.map(item => {
-    return {
-      ...item,
-      category_name: categories[item.category_id - 1] // Add category name to each item
-    };
-  }).filter((item) =>
-    Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
-  
+  const filteredItems = items
+    .map((item) => {
+      return {
+        ...item,
+        category_name: categories[item.category_id - 1], // Add category name to each item
+      };
+    })
+    .filter((item) =>
+      Object.values(item).some((value) =>
+        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
 
   return (
     <Wrapper>
-      <div className="d-flex justify-content-between w-100 my-3">
+      <div className="d-flex flex-column flex-md-row justify-content-between w-100 my-3">
         <h4 className="">View {type} Items</h4>
-        <div className="d-flex gap-2">
+        <div className="d-flex justify-content-between gap-2 mt-2 mt-md-0">
           <input
             type="text"
             className="border p-2 rounded"
@@ -108,43 +108,53 @@ export default function ViewItem({ type }) {
             value={searchTerm}
             onChange={handleSearch}
           />
-          <Dropdown>
-            <Dropdown.Toggle
-              split
-              variant="white"
-              id="dropdown-basic"
-              className="d-flex align-items-center justify-content-center"
-            >
-              <span className="px-2 pointer">
-                <Icon icon="material-symbols:download" width="25" height="25" />
-              </span>
-            </Dropdown.Toggle>
+          <div className="d-flex">
+            <Dropdown>
+              <Dropdown.Toggle
+                split
+                variant="white"
+                id="dropdown-basic"
+                className="d-flex align-items-center justify-content-center"
+              >
+                <span className="px-2 pointer">
+                  <Icon
+                    icon="material-symbols:download"
+                    width="25"
+                    height="25"
+                  />
+                </span>
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              <Dropdown.Item>
-                <ExportAsExcel data={filteredItems} fileName="items" headers={header}>
-                  {(props) => <span {...props}>Export as Excel</span>}
-                </ExportAsExcel>
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <ExportAsPdf
-                  data={filteredItems}
-                  fileName="itemsPdf"
-                  title={"List of " + type + " posts"}
-                  theme="grid"
-                  styles={{ fontSize: 5 }}
-                  headers={header}
-                >
-                  {(props) => <span {...props}>Export as Pdf</span>}
-                </ExportAsPdf>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <Link to={`/${user.role}/${type}/create`}>
-            <button className="btn btn-dark" as={Link} href="/">
-              + New Item
-            </button>
-          </Link>
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <ExportAsExcel
+                    data={filteredItems}
+                    fileName="items"
+                    headers={header}
+                  >
+                    {(props) => <span {...props}>Export as Excel</span>}
+                  </ExportAsExcel>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <ExportAsPdf
+                    data={filteredItems}
+                    fileName="itemsPdf"
+                    title={"List of " + type + " posts"}
+                    theme="grid"
+                    styles={{ fontSize: 5 }}
+                    headers={header}
+                  >
+                    {(props) => <span {...props}>Export as Pdf</span>}
+                  </ExportAsPdf>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            <Link to={`/${user.role}/${type}/create`}>
+              <button className="btn btn-dark" as={Link} href="/">
+                + New Item
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
       <Table responsive bordered hover size="lg">
